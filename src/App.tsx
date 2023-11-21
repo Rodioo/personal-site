@@ -1,7 +1,9 @@
 function App() {
   return (
-    <div className='border border-red-600'>
-      Hi Tailwind
+    <div
+      className='text-red-700 sm:text-blue-400'
+    >
+      Hi
     </div>
   )
 }
