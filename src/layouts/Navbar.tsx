@@ -1,6 +1,3 @@
-import {useState} from 'react';
-import {Transition} from '@headlessui/react';
-
 type NavButton = {
   name: string;
   isVisible: boolean;
