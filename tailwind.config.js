@@ -10,6 +10,7 @@ export default {
       },
       colors: {
         'onyx': '#3D3D3D',
+        'taupe-gray': '#848188',
       },
     },
   },

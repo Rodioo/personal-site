@@ -1,50 +1,57 @@
+import {Link, useLocation} from 'react-router-dom';
+
 type NavButton = {
   name: string;
-  isVisible: boolean;
+  path: string;
 };
 
 const navButtons: NavButton[] = [
   {
     name: 'HOME',
-    isVisible: true,
+    path: '/',
   },
   {
     name: 'ABOUT',
-    isVisible: false,
+    path: '/about',
   },
   {
     name: 'PROJECTS',
-    isVisible: false,
+    path: '/projects',
   },
   {
     name: 'ARTICLES',
-    isVisible: false,
+    path: '/articles',
   },
   {
     name: 'CONTACT',
-    isVisible: false,
+    path: '/contact',
   },
 ];
 
 const Navbar = () => {
+  const location = useLocation()
 
   return (
     <div className="flex w-screen">
-      <span className="mx-24 hidden whitespace-nowrap font-lato text-2xl font-bold text-white lg:block cursor-pointer">
-        Antonio Falcescu
-      </span>
+      <Link
+        to="/"
+        className="mx-24 hidden cursor-pointer whitespace-nowrap font-lato text-2xl font-bold text-white lg:block"
+      >
+        Antonio Fălcescu
+      </Link>
       <span className="flex w-full justify-evenly">
         {navButtons.map((navButton) => (
-          <span
+          <Link
             key={navButton.name}
+            to={navButton.path}
             className={`cursor-pointer px-2 font-lato text-lg tracking-widest text-white
             ${
-              navButton.isVisible
+              navButton.path === location.pathname
                 ? 'font-bold'
-                : 'font-medium text-gray-500 hover:text-gray-400'
+                : 'font-medium text-taupe-gray hover:text-white'
             }`}>
             {navButton.name}
-          </span>
+          </Link>
         ))}
       </span>
     </div>

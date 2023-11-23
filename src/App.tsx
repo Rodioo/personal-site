@@ -1,9 +1,12 @@
+import {Outlet} from 'react-router-dom';
+
 import Navbar from './layouts/Navbar.tsx';
 
 function App() {
   return (
-    <div className="py-8 h-screen w-screen bg-onyx">
+    <div className="h-screen w-screen bg-onyx py-8">
       <Navbar />
+      <Outlet />
     </div>
   );
 }
