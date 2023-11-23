@@ -6,7 +6,7 @@ const PageNotFound = () => {
   return (
     <div>
       {errorTypeIsErrorNotFound(error)
-        ? <div>
+        ? <div data-testid='errorMessage'>
             {error.data}
           </div>
         : <div>
