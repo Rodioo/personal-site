@@ -1,11 +1,11 @@
+import Navbar from './layouts/Navbar.tsx';
+
 function App() {
   return (
-    <div
-      className='text-red-700 sm:text-blue-400'
-    >
-      Hi
+    <div className="py-8 h-screen w-screen bg-onyx">
+      <Navbar />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
