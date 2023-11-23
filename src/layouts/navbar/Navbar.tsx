@@ -1,32 +1,12 @@
 import {Link, useLocation} from 'react-router-dom';
+import Page from "../../common/types/page.type.ts"
 
 type NavButton = {
   name: string;
   path: string;
 };
 
-const navButtons: NavButton[] = [
-  {
-    name: 'HOME',
-    path: '/',
-  },
-  {
-    name: 'ABOUT',
-    path: '/about',
-  },
-  {
-    name: 'PROJECTS',
-    path: '/projects',
-  },
-  {
-    name: 'ARTICLES',
-    path: '/articles',
-  },
-  {
-    name: 'CONTACT',
-    path: '/contact',
-  },
-];
+const navButtons: NavButton[] = Object.values(Page)
 
 const Navbar = () => {
   const location = useLocation()
