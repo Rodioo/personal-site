@@ -24,10 +24,10 @@ const Navbar = () => {
           <Link
             key={navButton.name}
             to={navButton.path}
-            className={`cursor-pointer px-2 font-lato text-lg tracking-widest text-white
+            className={`cursor-pointer px-2 font-lato text-lg tracking-widest
             ${
               navButton.path === location.pathname
-                ? 'font-bold'
+                ? 'font-bold text-white'
                 : 'font-medium text-taupe-gray hover:text-white'
             }`}>
             {navButton.name}

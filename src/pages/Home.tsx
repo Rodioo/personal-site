@@ -1,6 +1,7 @@
 function Home() {
+
   return (
-    <div>
+    <div data-testid='HOME'>
       Home
     </div>
   );

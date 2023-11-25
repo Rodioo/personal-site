@@ -1,6 +1,6 @@
 function Projects() {
   return (
-    <div>
+    <div data-testid='PROJECTS'>
       Projects
     </div>
   );

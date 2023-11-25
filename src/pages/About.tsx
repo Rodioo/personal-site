@@ -1,6 +1,6 @@
 function About() {
   return (
-    <div>
+    <div data-testid='ABOUT'>
       About
     </div>
   );

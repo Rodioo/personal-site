@@ -1,6 +1,6 @@
 function Articles() {
   return (
-    <div>
+    <div data-testid='ARTICLES'>
       Articles
     </div>
   );

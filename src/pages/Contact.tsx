@@ -1,6 +1,6 @@
 function Contact() {
   return (
-    <div>
+    <div data-testid='CONTACT'>
       Contact
     </div>
   );

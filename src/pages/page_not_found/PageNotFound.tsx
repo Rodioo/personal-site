@@ -5,28 +5,23 @@ const PageNotFound = () => {
 
   return (
     <div>
-      {errorTypeIsErrorNotFound(error)
-        ? <div data-testid='errorMessage'>
-            {error.data}
-          </div>
-        : <div>
-            Unknown error
-          </div>
-      }
+      {errorTypeIsErrorNotFound(error) && (
+        <div data-testid="errorMessage">{error.data}</div>
+      )}
     </div>
   );
-}
+};
 
 export default PageNotFound;
 
 type ErrorNotFound = {
-  data: string,
-  error: Error,
-  internal: boolean,
-  status: 404,
-  statusText: string
-}
+  data: string;
+  error: Error;
+  internal: boolean;
+  status: 404;
+  statusText: string;
+};
 
 const errorTypeIsErrorNotFound = (error: unknown): error is ErrorNotFound => {
   return (error as ErrorNotFound).status === 404;
-}
+};
