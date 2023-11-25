@@ -4,7 +4,15 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        lato: 'Lato'
+      },
+      colors: {
+        'onyx': '#3D3D3D',
+        'taupe-gray': '#848188',
+      },
+    },
   },
   plugins: [],
 }

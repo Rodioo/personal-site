@@ -1,11 +1,14 @@
+import {Outlet} from 'react-router-dom';
+
+import Navbar from './layouts/navbar/Navbar.tsx';
+
 function App() {
   return (
-    <div
-      className='text-red-700 sm:text-blue-400'
-    >
-      Hi
+    <div className="h-screen w-screen bg-onyx py-8">
+      <Navbar />
+      <Outlet />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
