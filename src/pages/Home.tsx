@@ -1,8 +1,7 @@
 function Home() {
-
   return (
-    <div data-testid='HOME'>
-      Home
+    <div data-testid="HOME">
+      <span className='text-white'>Home</span>
     </div>
   );
 }
