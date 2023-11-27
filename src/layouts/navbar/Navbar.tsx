@@ -1,22 +1,21 @@
 import {Link, useLocation} from 'react-router-dom';
-import Page from "../../common/types/page.type.ts"
+import Page from '../../common/types/page.type.ts';
 
 type NavButton = {
   name: string;
   path: string;
 };
 
-const navButtons: NavButton[] = Object.values(Page)
+const navButtons: NavButton[] = Object.values(Page);
 
 const Navbar = () => {
-  const location = useLocation()
+  const location = useLocation();
 
   return (
-    <div className="flex w-screen">
+    <div className="flex w-full">
       <Link
         to="/"
-        className="mx-24 hidden cursor-pointer whitespace-nowrap font-lato text-2xl font-bold text-white lg:block"
-      >
+        className="mx-24 hidden cursor-pointer whitespace-nowrap font-lato text-2xl font-bold text-white lg:block">
         Antonio Fălcescu
       </Link>
       <span className="flex w-full justify-evenly">
@@ -24,7 +23,7 @@ const Navbar = () => {
           <Link
             key={navButton.name}
             to={navButton.path}
-            className={`cursor-pointer px-2 font-lato text-lg tracking-widest
+            className={`cursor-pointer px-4 font-lato text-lg tracking-widest
             ${
               navButton.path === location.pathname
                 ? 'font-bold text-white'
