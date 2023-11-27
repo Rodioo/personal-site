@@ -3,35 +3,36 @@ import About from '../../pages/About.tsx';
 import Projects from '../../pages/Projects.tsx';
 import Articles from '../../pages/Articles.tsx';
 import Contact from '../../pages/Contact.tsx';
+import React from 'react';
 
 const Page = {
   Home: {
     name: 'HOME',
     path: '/',
-    element: Home()
+    element: React.createElement(Home),
   },
   About: {
     name: 'ABOUT',
     path: '/about',
-    element: About()
+    element: React.createElement(About),
   },
   Projects: {
     name: 'PROJECTS',
     path: '/projects',
-    element: Projects()
+    element: React.createElement(Projects),
   },
   Articles: {
     name: 'ARTICLES',
     path: '/articles',
-    element: Articles()
+    element: React.createElement(Articles),
   },
   Contact: {
     name: 'CONTACT',
     path: '/contact',
-    element: Contact()
+    element: React.createElement(Contact),
   },
 } as const;
 
-type Page = typeof Page[keyof typeof Page]
+type Page = (typeof Page)[keyof typeof Page];
 
 export default Page;
