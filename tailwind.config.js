@@ -12,6 +12,12 @@ export default {
         'onyx': '#3D3D3D',
         'taupe-gray': '#848188',
       },
+      width: {
+        '168': '36rem',
+      },
+      spacing: {
+        '4%': '4%'
+      }
     },
   },
   plugins: [],
