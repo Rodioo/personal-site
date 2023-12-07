@@ -1,4 +1,6 @@
-function About() {
+import React from 'react';
+
+const About = (): React.JSX.Element => {
   return (
     <div data-testid='ABOUT'>
       About

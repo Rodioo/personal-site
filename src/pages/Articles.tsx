@@ -1,4 +1,6 @@
-function Articles() {
+import React from 'react';
+
+const Articles = (): React.JSX.Element => {
   return (
     <div data-testid='ARTICLES'>
       Articles

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 import App from './App.tsx';
 import './index.css';
-import PageNotFound from './pages/page_not_found/PageNotFound.tsx';
+import PageNotFound from './pages/PageNotFound/PageNotFound.tsx';
 import Page from './common/types/page.type.ts'
 
 const router = createBrowserRouter([

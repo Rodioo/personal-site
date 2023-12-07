@@ -4,8 +4,8 @@ import {DocumentIcon, InformationCircleIcon} from '@heroicons/react/24/outline';
 import Button from '../components/Button/Button.tsx';
 import ButtonType from '../common/types/button.type.ts';
 
-//TODO: add button for primary CTA and useNavigate for redirect
-function Home() {
+//TODO: add Button for primary CTA and useNavigate for redirect
+const Home = (): React.JSX.Element => {
   return (
     <div
       data-testid="HOME"
