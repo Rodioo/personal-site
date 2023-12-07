@@ -1,4 +1,8 @@
+import React from 'react';
 import homePhoto from '../assets/home_photo.png';
+import {DocumentIcon, InformationCircleIcon} from '@heroicons/react/24/outline';
+import Button from '../components/Button/Button.tsx';
+import ButtonType from '../common/types/button.type.ts';
 
 //TODO: add button for primary CTA and useNavigate for redirect
 function Home() {
@@ -16,9 +20,17 @@ function Home() {
         <span className="mt-4 text-3xl font-medium tracking-widest text-taupe-gray 2xl:text-4xl">
           Software Developer
         </span>
-        <div className="mt-12">
-          <button className="text-white">Learn More</button>
-          <button className="ml-8 text-white">Resume</button>
+        <div className="mt-12 flex gap-6">
+          <Button
+            type={ButtonType.Primary}
+            text="Learn More"
+            icon={<InformationCircleIcon className="m-auto h-5 w-5 lg:h-6 lg:w-6" />}
+          />
+          <Button
+            type={ButtonType.Link}
+            text="Resume"
+            icon={<DocumentIcon className="m-auto h-5 w-5 lg:h-6 lg:w-6" />}
+          />
         </div>
       </div>
       <img
@@ -28,6 +40,6 @@ function Home() {
       />
     </div>
   );
-}
+};
 
 export default Home;
