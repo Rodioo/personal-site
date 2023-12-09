@@ -1,3 +1,4 @@
+import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import Page from '../../common/types/page.type.ts';
 
@@ -8,7 +9,7 @@ type NavButton = {
 
 const navButtons: NavButton[] = Object.values(Page);
 
-const Navbar = () => {
+const Navbar = (): React.JSX.Element => {
   const location = useLocation();
 
   return (
