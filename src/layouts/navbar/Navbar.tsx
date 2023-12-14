@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import Page from '../../common/types/page.type.ts';
+import ComputerDesktopIcon from "@heroicons/react/24/outline/ComputerDesktopIcon"
 
 type NavButton = {
   name: string;
@@ -16,8 +17,9 @@ const Navbar = (): React.JSX.Element => {
     <div className="flex w-full">
       <Link
         to="/"
-        className="mx-24 hidden cursor-pointer whitespace-nowrap font-lato text-2xl font-bold text-white lg:block">
-        Antonio Fălcescu
+        className="mx-24 hidden cursor-pointer whitespace-nowrap font-lato text-2xl font-bold text-white lg:flex gap-2">
+          <ComputerDesktopIcon className='w-6 h-6 m-auto' />
+          Antonio Fălcescu
       </Link>
       <span className="flex w-full justify-evenly">
         {navButtons.map((navButton) => (
