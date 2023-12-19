@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import Page from '../../common/types/page.type.ts';
-import ComputerDesktopIcon from "@heroicons/react/24/outline/ComputerDesktopIcon"
+import { FaLaptopCode } from "react-icons/fa6";
 
 type NavButton = {
   name: string;
@@ -17,8 +17,8 @@ const Navbar = (): React.JSX.Element => {
     <div className="flex w-full">
       <Link
         to="/"
-        className="mx-24 hidden cursor-pointer whitespace-nowrap font-lato text-2xl font-bold text-white lg:flex gap-2">
-          <ComputerDesktopIcon className='w-6 h-6 m-auto' />
+        className="mx-24 hidden cursor-pointer whitespace-nowrap font-lato text-2xl font-bold text-white lg:flex gap-3">
+          <FaLaptopCode className='w-7 h-7 m-auto' />
           Antonio Falcescu
       </Link>
       <span className="flex w-full justify-around gap-4">

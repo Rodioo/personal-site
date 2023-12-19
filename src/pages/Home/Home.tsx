@@ -1,11 +1,12 @@
 import React from 'react';
 import homePhoto from '../../assets/home_photo.png';
-import {FolderIcon, InformationCircleIcon} from '@heroicons/react/24/outline';
 import Button from '../../components/Button/Button.tsx';
 import ButtonType from '../../common/types/button.type.ts';
 import {useNavigate} from 'react-router-dom';
 import AnimatedText from '../../components/AnimatedText/AnimatedText.tsx';
 import InfiniteAnimatedText from '../../components/AnimatedText/InfiniteAnimatedText.tsx';
+import {FaRegFolderOpen} from 'react-icons/fa6';
+import {IoMdInformationCircleOutline} from 'react-icons/io';
 
 const Home = (): React.JSX.Element => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const Home = (): React.JSX.Element => {
             }}
             type={ButtonType.Primary}
             text="My Work"
-            icon={<FolderIcon className="m-auto h-5 w-5 lg:h-6 lg:w-6" />}
+            icon={<FaRegFolderOpen className="m-auto h-5 w-5 lg:h-6 lg:w-6" />}
           />
           <Button
             onClick={() => {
@@ -50,7 +51,7 @@ const Home = (): React.JSX.Element => {
             type={ButtonType.Link}
             text="Learn More"
             icon={
-              <InformationCircleIcon className="m-auto h-5 w-5 lg:h-6 lg:w-6" />
+              <IoMdInformationCircleOutline className="m-auto h-5 w-5 lg:h-6 lg:w-6" />
             }
           />
         </div>
