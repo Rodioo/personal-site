@@ -24,11 +24,11 @@ const Button = ({
         duration-300 ease-in-out hover:-translate-y-0.5 hover:scale-105 lg:text-lg xl:text-xl
         ${
           type === ButtonType.Primary &&
-          'hover:bg-ncs-blue rounded-lg bg-picton-blue p-3 hover:shadow-xl'
+          'hover:bg-ncs-blue rounded-lg bg-picton-blue px-4 py-3 hover:shadow-xl'
         } 
         ${
           type === ButtonType.Link &&
-          'hover:text-baby-blue m-3 hover:underline'
+          'hover:text-baby-blue mx-4 my-3 hover:underline'
         } 
         ${className}
       `}>
