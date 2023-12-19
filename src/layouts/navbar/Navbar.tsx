@@ -19,14 +19,14 @@ const Navbar = (): React.JSX.Element => {
         to="/"
         className="mx-24 hidden cursor-pointer whitespace-nowrap font-lato text-2xl font-bold text-white lg:flex gap-2">
           <ComputerDesktopIcon className='w-6 h-6 m-auto' />
-          Antonio Fălcescu
+          Antonio Falcescu
       </Link>
-      <span className="flex w-full justify-evenly">
+      <span className="flex w-full justify-around gap-4">
         {navButtons.map((navButton) => (
           <Link
             key={navButton.name}
             to={navButton.path}
-            className={`cursor-pointer px-4 font-lato text-lg tracking-widest
+            className={`cursor-pointer font-lato text-lg tracking-widest
             ${
               navButton.path === location.pathname
                 ? 'font-bold text-white'

@@ -4,7 +4,7 @@ import Navbar from './layouts/Navbar/Navbar.tsx';
 
 function App() {
   return (
-    <div className="max-w-screen min-h-screen overflow-x-hidden bg-onyx py-8">
+    <div className="min-h-screen max-w-full bg-onyx py-8">
       <Navbar />
       <Outlet />
     </div>
