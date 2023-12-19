@@ -20,20 +20,20 @@ const Button = ({
     <button
       onClick={onClick}
       className={`
-        flex gap-1 text-white transition delay-150
+        flex gap-1.5 text-white transition delay-150
         duration-300 ease-in-out hover:-translate-y-0.5 hover:scale-105 lg:text-lg xl:text-xl
         ${
           type === ButtonType.Primary &&
-          'hover:bg-ncs-blue rounded-xl bg-picton-blue px-5 py-3.5 hover:shadow-xl'
+          'hover:bg-ncs-blue rounded-lg bg-picton-blue p-3 hover:shadow-xl'
         } 
         ${
           type === ButtonType.Link &&
-          'hover:text-baby-blue mx-5 my-3.5 hover:underline'
+          'hover:text-baby-blue m-3 hover:underline'
         } 
         ${className}
       `}>
       {icon}
-      <span>{text}</span>
+      <span className='mt-auto mb-auto'>{text}</span>
     </button>
   );
 };
