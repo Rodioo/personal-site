@@ -17,7 +17,7 @@ const ProjectCard = ({
     <div className={`flex flex-col gap-4 ${className}`}>
       <img
         src={backgroundSrc}
-        alt={undefined}
+        alt={'Project cover'}
         className="cursor-pointer h-24 grayscale
         duration-700 ease-in-out hover:-translate-y-0.5 hover:scale-105 hover:grayscale-0"
       />
