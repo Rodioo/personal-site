@@ -4,8 +4,7 @@ import ButtonType from '../../common/types/button.type.ts';
 type Props = {
   className?: string;
   type: ButtonType;
-  text: string;
-  icon: ReactNode;
+  children: ReactNode;
   onClick: () => void
 };
 
@@ -13,8 +12,7 @@ const Button = ({
   className = '',
   onClick,
   type,
-  text,
-  icon,
+  children
 }: Props): React.JSX.Element => {
   return (
     <button
@@ -32,8 +30,7 @@ const Button = ({
         } 
         ${className}
       `}>
-      {icon}
-      <span className='mt-auto mb-auto'>{text}</span>
+      {children}
     </button>
   );
 };

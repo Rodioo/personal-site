@@ -41,19 +41,19 @@ const Home = (): React.JSX.Element => {
               navigate('/projects');
             }}
             type={ButtonType.Primary}
-            text="My Work"
-            icon={<FaRegFolderOpen className="m-auto h-5 w-5 lg:h-6 lg:w-6" />}
-          />
+          >
+            <FaRegFolderOpen className="m-auto h-5 w-5 lg:h-6 lg:w-6" />
+            <span className='mt-auto mb-auto'>My Work</span>
+          </Button>
           <Button
             onClick={() => {
               navigate('/about');
             }}
             type={ButtonType.Link}
-            text="Learn More"
-            icon={
-              <IoMdInformationCircleOutline className="m-auto h-5 w-5 lg:h-6 lg:w-6" />
-            }
-          />
+          >
+            <IoMdInformationCircleOutline className="m-auto h-5 w-5 lg:h-6 lg:w-6" />
+            <span className='mt-auto mb-auto'>Learn More</span>
+          </Button>
         </div>
       </div>
       <img

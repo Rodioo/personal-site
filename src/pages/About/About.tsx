@@ -11,14 +11,14 @@ import {FaRegFolderOpen} from 'react-icons/fa6';
 import {useNavigate} from 'react-router-dom';
 import resume from "../../assets/Resume.pdf"
 
-//TODO: section for passions
+//TODO: responsiveness
 const About = (): React.JSX.Element => {
   const navigate = useNavigate();
 
   return (
     <div
       data-testid="ABOUT"
-      className="mx-6 mt-8 flex flex-col gap-8 font-lato">
+      className="mt-8 flex flex-col gap-8 font-lato w-11/12 sm:w-1/2 ml-auto mr-auto">
       <div>
         <HeaderParagraph title={'About me'}>
           <p className="text-justify text-lg font-light tracking-wide">
@@ -31,15 +31,16 @@ const About = (): React.JSX.Element => {
             culpa qui officia deserunt mollit anim id est laborum.
           </p>
         </HeaderParagraph>
-        <a href={resume} download="Resume_Antonio_Falcescu" target='_blank'>
           <Button
             className="ml-auto mr-auto mt-4"
             type={ButtonType.Primary}
-            text={'Resume'}
-            icon={<FaDownload className="m-auto h-4 w-4 lg:h-4 lg:w-4" />}
             onClick={() => {}}
-          />
-        </a>
+          >
+            <a href={resume} download="Resume_Antonio_Falcescu" target='_blank' className='flex flex-row gap-1.5'>
+              <FaDownload className="m-auto h-4 w-4 lg:h-4 lg:w-4" />
+              <span className='mt-auto mb-auto'>Resume</span>
+            </a>
+          </Button>
       </div>
       <div>
         <HeaderParagraph title={'Projects'}>
@@ -63,12 +64,13 @@ const About = (): React.JSX.Element => {
         <Button
           className="ml-auto mr-auto mt-6"
           type={ButtonType.Primary}
-          text={'All Projects'}
-          icon={<FaRegFolderOpen className="m-auto h-4 w-4 lg:h-4 lg:w-4" />}
           onClick={() => {
             navigate('/projects');
           }}
-        />
+        >
+          <FaRegFolderOpen className="m-auto h-4 w-4 lg:h-4 lg:w-4" />
+          <span className='mt-auto mb-auto'>All Projects</span>
+        </Button>
       </div>
       <HeaderParagraph title={'Passionate about'}>
         <p className="text-justify text-lg font-light tracking-wide">
