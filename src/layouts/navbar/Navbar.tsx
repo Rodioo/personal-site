@@ -17,7 +17,8 @@ const Navbar = (): React.JSX.Element => {
     <div className="flex w-full">
       <Link
         to="/"
-        className="mx-24 hidden cursor-pointer whitespace-nowrap font-lato text-2xl font-bold text-white lg:flex gap-3">
+        className="mx-24
+        hidden cursor-pointer whitespace-nowrap font-lato text-2xl font-bold text-white lg:flex gap-2">
           <FaLaptopCode className='w-7 h-7 m-auto' />
           Antonio Falcescu
       </Link>
