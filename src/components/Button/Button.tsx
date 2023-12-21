@@ -5,12 +5,12 @@ type Props = {
   className?: string;
   type: ButtonType;
   children: ReactNode;
-  onClick: () => void
+  onClick?: () => void
 };
 
 const Button = ({
   className = '',
-  onClick,
+  onClick = () => {},
   type,
   children
 }: Props): React.JSX.Element => {
