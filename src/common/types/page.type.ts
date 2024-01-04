@@ -1,7 +1,7 @@
 import Home from '../../pages/Home/Home.tsx';
 import About from '../../pages/About/About.tsx';
 import Projects from '../../pages/Projects/Projects.tsx';
-import Articles from '../../pages/Articles.tsx';
+import Articles from '../../pages/Articles/Articles.tsx';
 import Contact from '../../pages/Contact.tsx';
 import React from 'react';
 
