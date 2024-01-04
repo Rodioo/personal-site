@@ -18,7 +18,7 @@ const Social = ({
       href={link}
       target="_blank"
       className={
-      `ml-6 flex w-fit flex-row gap-3 p-2 text-baby-blue rounded-md
+      `ml-6 flex w-fit flex-row gap-3 p-2 text-baby-blue rounded-md cursor-pointer
       hover:bg-baby-blue hover:bg-opacity-10
       ${className}`
     }
