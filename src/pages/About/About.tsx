@@ -6,14 +6,13 @@ import HeaderParagraph from '../../components/HeaderParagraph/HeaderParagraph.ts
 import Button from '../../components/Button/Button.tsx';
 import ButtonType from '../../common/types/button.type.ts';
 import ProjectCard from '../../components/ProjectCard/ProjectCard.tsx';
-import pic from '../../assets/pic.jpeg';
-import spanzuratoarea from "../../assets/spanzuratoarea.png"
+import spanzuratoarea_photo from "../../assets/spanzuratoarea.png"
+import guessify_photo from "../../assets/guessify.png"
 import {FaRegFolderOpen} from 'react-icons/fa6';
 import {useNavigate} from 'react-router-dom';
 import resume from '../../assets/Resume.pdf';
 import ProjectPlatform from '../../common/types/projectPlatform.type.ts';
 
-//TODO: responsiveness
 const About = (): React.JSX.Element => {
   const navigate = useNavigate();
   const [currentDay, setCurrentDay] = useState('day');
@@ -27,7 +26,7 @@ const About = (): React.JSX.Element => {
   return (
     <div
       data-testid="ABOUT"
-      className="ml-auto mr-auto mt-8 flex w-11/12 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
+      className="ml-auto mr-auto mt-8 flex w-10/12 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
       <div>
         <HeaderParagraph title={'About me'}>
           <p className="whitespace-pre-wrap text-justify font-light">
@@ -40,7 +39,7 @@ const About = (): React.JSX.Element => {
             Science from the University of Bucharest. &#10;&emsp;In my free
             time, I enjoy building and publishing indie applications with a real
             use that fit my or others' needs. Additionally, I like practicing
-            Leetcode questions and participating in coding challenges organized
+            LeetCode questions and participating in coding challenges organized
             by the community to both test my problem-solving abilities and learn
             from others. &#10;&emsp;When not doing something related to
             programming, I like to watch videos/documentaries and read
@@ -68,14 +67,14 @@ const About = (): React.JSX.Element => {
         <HeaderParagraph title={'Projects'}>
           <ProjectCard
             className="mt-2"
-            backgroundSrc={pic}
+            backgroundSrc={guessify_photo}
             title={'Guessify'}
             description={`A Spotify based app that incorporates listening stats, song recommendations and a multiplayer 'Guess the Song' game`}
             platform={ProjectPlatform.Android}
           />
           <ProjectCard
             className="mt-6"
-            backgroundSrc={spanzuratoarea}
+            backgroundSrc={spanzuratoarea_photo}
             title={'Spanzuratoarea'}
             description={`Trivia game meant to improve Romanian kids' general knowledge`}
             platform={ProjectPlatform.Android}
