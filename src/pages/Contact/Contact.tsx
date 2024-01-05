@@ -6,7 +6,7 @@ import Button from '../../components/Button/Button.tsx';
 import ButtonType from '../../common/types/button.type.ts';
 import {IoIosSend} from 'react-icons/io';
 
-//TODO: style text area scrollbar, style focused input, style invalid input, style valid input, add captcha after pressing send, add tests for input, add mail library
+//TODO: style invalid input, style valid input, add captcha after pressing send, add tests for input, add mail library
 const Contact = (): React.JSX.Element => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -43,20 +43,18 @@ const Contact = (): React.JSX.Element => {
       <HeaderParagraph title={'Send me an email'}>
         <div className="ml-8 flex flex-col gap-6">
           <input
-            className="border-b bg-transparent p-1 duration-700 ease-in-out focus:-translate-y-0.5
-              focus:scale-105 focus:outline-none"
+            className="ease border-b-2 bg-transparent p-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue"
             placeholder="Your email address"
             type="text"
           />
           <input
-            className="border-b bg-transparent p-1 duration-700 ease-in-out focus:-translate-y-0.5
-              focus:scale-105 focus:outline-none"
+            className="ease border-b-2 bg-transparent p-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue"
             placeholder="Subject"
             type="text"
           />
           <textarea
             ref={textAreaRef}
-            className="resize-none border-b bg-transparent p-1 focus:outline-none"
+            className="text-md scrollbar ease resize-none border-b-2 bg-transparent p-1 outline-none transition-colors duration-700 focus:border-b-picton-blue"
             placeholder="Content"
             rows={1}
             onInput={handleAutoExpand}
