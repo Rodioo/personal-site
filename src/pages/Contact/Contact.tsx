@@ -6,7 +6,12 @@ import Button from '../../components/Button/Button.tsx';
 import ButtonType from '../../common/types/button.type.ts';
 import {IoIosSend} from 'react-icons/io';
 
-//TODO: add validation for input, design popups for success/error after sending mail, add debounce for appearance of error input message, add mail library, add functionality correct for displaying success/error popups after sending mail, add loading screen for sending mail, add captcha after pressing send, add tests for input, refactor, redesign hover effect popup and add animation
+//TODO: design popups for success/error after sending mail,
+// add debounce for appearance of error input message,
+// rethink logic for appearance of error message (to also appear if the field is empty after the user focused it but not when first loading the page),
+// add mail library, add functionality correct for displaying success/error popups after sending mail,
+// add loading screen for sending mail, add captcha after pressing send, add tests for input, refactor,
+// redesign hover effect popup and add animation
 const Contact = (): React.JSX.Element => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
