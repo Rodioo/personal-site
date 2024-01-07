@@ -6,7 +6,7 @@ import Button from '../../components/Button/Button.tsx';
 import ButtonType from '../../common/types/button.type.ts';
 import {IoIosSend} from 'react-icons/io';
 
-//TODO: add validation for input, design popups for success/error after sending mail, add mail library, add functionality correct for displaying success/error popups after sending mail, add loading screen for sending mail, add captcha after pressing send, add tests for input, refactor, redesign hover effect popup and add animation
+//TODO: add validation for input, design popups for success/error after sending mail, add debounce for appearance of error input message, add mail library, add functionality correct for displaying success/error popups after sending mail, add loading screen for sending mail, add captcha after pressing send, add tests for input, refactor, redesign hover effect popup and add animation
 const Contact = (): React.JSX.Element => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -49,7 +49,30 @@ const Contact = (): React.JSX.Element => {
       ...prevData,
       [name]: value,
     }));
+
+    validateInput(name, value)
   };
+
+  const validateInput = (name: string, value: string) => {
+    const isInputValid = isEmailDataValid
+
+    switch (name) {
+      case "email": {
+        isInputValid.email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        break;
+      }
+      case "subject": {
+        isInputValid.subject = value.length > 0 && value.length < 78
+        break;
+      }
+      case "content": {
+        isInputValid.content = value.length > 0 && value.length < 2000
+        break;
+      }
+    }
+
+    setIsEmailDataValid(isInputValid)
+  }
 
   return (
     <div
@@ -126,7 +149,7 @@ const Contact = (): React.JSX.Element => {
                     hoveringDataName === 'subject' ? 'block' : 'hidden'
                   } rounded-sm bg-red-500 px-3 py-2`}>
                   <div className="text-center text-sm">
-                    Please enter a subject for the mail
+                    Please enter a subject for the mail (max. 78 chars)
                   </div>
                 </div>
                 <span className="absolute right-0 flex h-3 w-3 z-20">
@@ -164,7 +187,7 @@ const Contact = (): React.JSX.Element => {
                     hoveringDataName === 'content' ? 'block' : 'hidden'
                   } rounded-sm bg-red-500 px-3 py-2`}>
                   <div className="text-center text-sm">
-                    Please enter a content for the mail
+                    Please enter a content for the mail (max. 2000 chars)
                   </div>
                 </div>
                 <span className="absolute right-0 flex h-3 w-3 z-20">
