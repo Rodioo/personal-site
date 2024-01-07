@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import HeaderParagraph from '../../components/HeaderParagraph/HeaderParagraph.tsx';
 import {FaLinkedin} from 'react-icons/fa';
 import Social from '../../components/Social/Social.tsx';
@@ -6,9 +6,21 @@ import Button from '../../components/Button/Button.tsx';
 import ButtonType from '../../common/types/button.type.ts';
 import {IoIosSend} from 'react-icons/io';
 
-//TODO: add functionality for on hover on warning invalid input, add captcha after pressing send, add tests for input, add mail library, refactor
+//TODO: add validation for input, design popups for success/error after sending mail, add mail library, add functionality correct for displaying success/error popups after sending mail, add loading screen for sending mail, add captcha after pressing send, add tests for input, refactor, redesign hover effect popup and add animation
 const Contact = (): React.JSX.Element => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const [emailData, setEmailData] = useState({
+    email: '',
+    subject: '',
+    content: '',
+  });
+  const [isEmailDataValid, setIsEmailDataValid] = useState({
+    email: false,
+    subject: false,
+    content: false,
+  });
+  const [hoveringDataName, setHoveringDataName] = useState<string>();
 
   const handleAutoExpand = () => {
     const MAX_HEIGHT: number = 300;
@@ -29,6 +41,16 @@ const Contact = (): React.JSX.Element => {
     }
   };
 
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const {name, value} = event.target;
+    setEmailData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
     <div
       data-testid="CONTACT"
@@ -44,38 +66,113 @@ const Contact = (): React.JSX.Element => {
         <div className="ml-8 flex flex-col gap-6">
           <div className="relative flex flex-row justify-between">
             <input
-              className="ease w-full border-b-2 bg-transparent p-1 text-lg outline-none transition-colors duration-700 invalid:border-b-red-600 focus:border-b-picton-blue"
+              className={`
+                  ease w-full border-b-2 bg-transparent p-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue 
+                  ${
+                    emailData.email.length > 0 &&
+                    !isEmailDataValid.email &&
+                    'border-b-red-500'
+                  }  
+              `}
               placeholder="Your email address"
               type="email"
+              name="email"
+              value={emailData.email}
+              onChange={handleInputChange}
             />
-            <span className="absolute right-0 flex h-3 w-3 ">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
-            </span>
+            {emailData.email.length > 0 && !isEmailDataValid.email && (
+              <span
+                className="absolute right-0 flex min-h-32"
+                onMouseOver={() => setHoveringDataName('email')}
+                onMouseOut={() => setHoveringDataName(undefined)}>
+                <div
+                  className={`z-10 ${
+                    hoveringDataName === 'email' ? 'block' : 'hidden'
+                  } rounded-sm bg-red-500 px-3 py-2`}>
+                  <div className="text-center text-sm">
+                    Please enter a valid email address
+                  </div>
+                </div>
+                <span className="absolute right-0 flex h-3 w-3 z-20">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
+                </span>
+              </span>
+            )}
           </div>
           <div className="relative flex flex-row justify-between">
             <input
-              className="ease w-full border-b-2 bg-transparent p-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue"
+              className={`
+                  ease w-full border-b-2 bg-transparent p-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue
+                  ${
+                    emailData.subject.length > 0 &&
+                    !isEmailDataValid.subject &&
+                    'border-b-red-500'
+                  }  
+              `}
               placeholder="Subject"
               type="text"
+              name="subject"
+              value={emailData.subject}
+              onChange={handleInputChange}
             />
-            <span className="absolute right-0 flex h-3 w-3 ">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
-            </span>
+            {emailData.subject.length > 0 && !isEmailDataValid.subject && (
+              <span
+                className="absolute right-0 flex min-h-32"
+                onMouseOver={() => setHoveringDataName('subject')}
+                onMouseOut={() => setHoveringDataName(undefined)}>
+                <div
+                  className={`z-10 ${
+                    hoveringDataName === 'subject' ? 'block' : 'hidden'
+                  } rounded-sm bg-red-500 px-3 py-2`}>
+                  <div className="text-center text-sm">
+                    Please enter a subject for the mail
+                  </div>
+                </div>
+                <span className="absolute right-0 flex h-3 w-3 z-20">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
+                </span>
+              </span>
+            )}
           </div>
           <div className="relative flex flex-row justify-between">
             <textarea
               ref={textAreaRef}
-              className="text-md scrollbar ease w-full resize-none border-b-2 bg-transparent p-1 outline-none transition-colors duration-700 focus:border-b-picton-blue"
+              className={`
+                  text-lg scrollbar ease w-full resize-none border-b-2 bg-transparent pl-1 outline-none transition-colors duration-700 focus:border-b-picton-blue
+                  ${
+                    emailData.content.length > 0 &&
+                    !isEmailDataValid.content &&
+                    'border-b-red-500'
+                  }  
+              `}
               placeholder="Content"
-              rows={1}
+              name="content"
+              value={emailData.content}
+              onChange={handleInputChange}
               onInput={handleAutoExpand}
+              rows={1}
             />
-            <span className="absolute right-0 flex h-3 w-3 ">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
-            </span>
+            {emailData.content.length > 0 && !isEmailDataValid.content && (
+              <span
+                className="absolute right-0 flex min-h-32"
+                onMouseOver={() => setHoveringDataName('content')}
+                onMouseOut={() => setHoveringDataName(undefined)}>
+                <div
+                  className={`z-10 ${
+                    hoveringDataName === 'content' ? 'block' : 'hidden'
+                  } rounded-sm bg-red-500 px-3 py-2`}>
+                  <div className="text-center text-sm">
+                    Please enter a content for the mail
+                  </div>
+                </div>
+                <span className="absolute right-0 flex h-3 w-3 z-20">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
+                </span>
+              </span>
+            )}
           </div>
           <Button
             type={ButtonType.Primary}
