@@ -4,6 +4,7 @@ import Projects from '../../pages/Projects/Projects.tsx';
 import Articles from '../../pages/Articles/Articles.tsx';
 import Contact from '../../pages/Contact/Contact.tsx';
 import React from 'react';
+import ProjectDetails from '../../pages/ProjectDetails/ProjectDetails.tsx';
 
 const Page = {
   Home: {
@@ -30,6 +31,11 @@ const Page = {
     name: 'CONTACT',
     path: '/contact',
     element: React.createElement(Contact),
+  },
+  ProjectDetails: {
+    name: 'PROJECT_DETAILS',
+    path: '/projects/:projectId',
+    element: React.createElement(ProjectDetails),
   },
 } as const;
 
