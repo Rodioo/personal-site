@@ -6,7 +6,6 @@ import ProjectPlatform from '../../common/types/projectPlatform.type.ts';
 import spanzuratoarea_photo from '../../assets/spanzuratoarea.png';
 import pic from "../../assets/pic.jpeg"
 
-//TODO: add backend for each projects page
 const Projects = (): React.JSX.Element => {
 
   return (

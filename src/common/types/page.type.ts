@@ -11,31 +11,38 @@ const Page = {
     name: 'HOME',
     path: '/',
     element: React.createElement(Home),
+    showInNavbar: true,
   },
   About: {
     name: 'ABOUT',
     path: '/about',
     element: React.createElement(About),
+    showInNavbar: true,
   },
   Projects: {
     name: 'PROJECTS',
     path: '/projects',
     element: React.createElement(Projects),
+    showInNavbar: true,
   },
   Articles: {
     name: 'ARTICLES',
     path: '/articles',
     element: React.createElement(Articles),
+    showInNavbar: true,
   },
   Contact: {
     name: 'CONTACT',
     path: '/contact',
     element: React.createElement(Contact),
+    showInNavbar: true,
+
   },
   ProjectDetails: {
     name: 'PROJECT_DETAILS',
     path: '/projects/:projectId',
     element: React.createElement(ProjectDetails),
+    showInNavbar: false,
   },
 } as const;
 
