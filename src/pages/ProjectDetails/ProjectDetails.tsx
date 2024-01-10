@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import ProjectPlatform from '../../common/types/projectPlatform.type.ts';
+import ProjectPlatform from '../../common/types/project/projectPlatform.type.ts';
 import axios from '../../../axios.config.ts';
 import ProjectCard from '../../components/ProjectCard/ProjectCard.tsx';
 import HeaderParagraph from '../../components/HeaderParagraph/HeaderParagraph.tsx';
-import ProjectInfo from '../../common/types/projectInfo.type.ts';
+import ProjectInfo from '../../common/types/project/projectInfo.type.ts';
 
 //TODO: redesign projectCard to also be able to display full info about a project on the projectDetails page
 // Should take in account the full description and multiple colored images (slideshow or static top-down images)
@@ -21,7 +21,7 @@ const ProjectDetails = (): React.JSX.Element => {
 
     const URL = `/projects/${projectId}`;
     axios
-      .get(URL)
+      .get<ProjectInfo>(URL)
       .then((response) => {
         if (response.status === 200) {
           response.data.coverImagePath =
