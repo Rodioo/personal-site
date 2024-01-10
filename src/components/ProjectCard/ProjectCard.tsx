@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectPlatform from '../../common/types/projectPlatform.type.ts';
+import ProjectPlatform from '../../common/types/project/projectPlatform.type.ts';
 
 type Props = {
   className?: string;
@@ -28,7 +28,7 @@ const ProjectCard = ({
         <div className="flex flex-row justify-between">
           <p className="text-xl tracking-widest">{title}</p>
           <div className="flex flex-row gap-2">
-            {platform?.map((icon) => {
+            {platform?.icons.map((icon) => {
               return icon;
             })}
           </div>
