@@ -3,7 +3,6 @@ import {useParams} from 'react-router-dom';
 import ProjectPlatform from '../../common/types/projectPlatform.type.ts';
 import axios from '../../../axios.config.ts';
 import ProjectCard from '../../components/ProjectCard/ProjectCard.tsx';
-import pic from '../../assets/pic.jpeg';
 import HeaderParagraph from '../../components/HeaderParagraph/HeaderParagraph.tsx';
 import ProjectInfo from '../../common/types/projectInfo.type.ts';
 
@@ -25,6 +24,10 @@ const ProjectDetails = (): React.JSX.Element => {
       .get(URL)
       .then((response) => {
         if (response.status === 200) {
+          response.data.coverImagePath =
+            import.meta.env.VITE_APP_SERVER_STATIC_BASE_URL +
+            '/' +
+            response.data.coverImagePath;
           setProjectInfo(response.data);
         }
       })
@@ -45,7 +48,7 @@ const ProjectDetails = (): React.JSX.Element => {
         <HeaderParagraph title={projectInfo.title}>
           <ProjectCard
             className="mt-2"
-            backgroundSrc={pic}
+            backgroundSrc={projectInfo.coverImagePath}
             title={projectInfo.title}
             description={projectInfo.shortDescription}
             platform={ProjectPlatform[projectInfo.platform]}
