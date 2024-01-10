@@ -11,7 +11,7 @@ import guessify_photo from "../../assets/guessify.png"
 import {FaRegFolderOpen} from 'react-icons/fa6';
 import {useNavigate} from 'react-router-dom';
 import resume from '../../assets/Resume.pdf';
-import ProjectPlatform from '../../common/types/projectPlatform.type.ts';
+import ProjectPlatform from '../../common/types/project/projectPlatform.type.ts';
 
 const About = (): React.JSX.Element => {
   const navigate = useNavigate();
