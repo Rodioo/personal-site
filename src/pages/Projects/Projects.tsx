@@ -5,6 +5,7 @@ import ProjectPlatform from '../../common/types/project/projectPlatform.type.ts'
 import ProjectInfo from '../../common/types/project/projectInfo.type.ts';
 import PlatformCategory from '../../common/types/project/projectCategory.type.ts';
 import axios from '../../../axios.config.ts';
+import {useNavigate} from 'react-router-dom';
 
 type GroupedProjects = {
   [key in PlatformCategory]?: ProjectInfo[];
@@ -12,6 +13,8 @@ type GroupedProjects = {
 
 const Projects = (): React.JSX.Element => {
   const [groupedProjects, setGroupedProjects] = useState<GroupedProjects>({});
+  const navigate = useNavigate();
+
   useEffect(() => {
     const URL = `/projects`;
     axios
@@ -62,6 +65,9 @@ const Projects = (): React.JSX.Element => {
                   title={projectInfo.title}
                   description={projectInfo.shortDescription}
                   platform={ProjectPlatform[projectInfo.platform]}
+                  onClick={() => {
+                    navigate(`/projects/${projectInfo.id}`)
+                  }}
                 />
               )
             )}

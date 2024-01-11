@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import ProjectPlatform from '../../common/types/project/projectPlatform.type.ts';
 import axios from '../../../axios.config.ts';
-import ProjectCard from '../../components/ProjectCard/ProjectCard.tsx';
 import HeaderParagraph from '../../components/HeaderParagraph/HeaderParagraph.tsx';
 import ProjectInfo from '../../common/types/project/projectInfo.type.ts';
+import DetailedProjectCard from '../../components/ProjectCard/DetailedProjectCard.tsx';
+import {getGitPlatformFromLink, getPublishedPlatformFromLink} from '../../common/utils/utils.ts';
 
 //TODO: redesign projectCard to also be able to display full info about a project on the projectDetails page
 // Should take in account the full description and multiple colored images (slideshow or static top-down images)
@@ -28,6 +28,18 @@ const ProjectDetails = (): React.JSX.Element => {
             import.meta.env.VITE_APP_SERVER_STATIC_BASE_URL +
             '/' +
             response.data.coverImagePath;
+          if (response.data.createdAt) {
+            response.data.createdAt = new Date(response.data.createdAt)
+          }
+          if (response.data.updatedAt) {
+            response.data.updatedAt = new Date(response.data.updatedAt)
+          }
+          if (response.data.gitLink) {
+            response.data.gitPlatform = getGitPlatformFromLink(response.data.gitLink)
+          }
+          if (response.data.appLink) {
+            response.data.publishedPlatform = getPublishedPlatformFromLink(response.data.appLink)
+          }
           setProjectInfo(response.data);
         }
       })
@@ -38,7 +50,7 @@ const ProjectDetails = (): React.JSX.Element => {
           console.log(exception);
         }
       });
-  }, [projectId]);
+  }, []);
 
   return (
     <div
@@ -46,13 +58,7 @@ const ProjectDetails = (): React.JSX.Element => {
       className="ml-auto mr-auto mt-8 flex w-10/12 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
       {projectInfo && (
         <HeaderParagraph title={projectInfo.title}>
-          <ProjectCard
-            className="mt-2"
-            backgroundSrc={projectInfo.coverImagePath}
-            title={projectInfo.title}
-            description={projectInfo.shortDescription}
-            platform={ProjectPlatform[projectInfo.platform]}
-          />
+          <DetailedProjectCard projectInfo={projectInfo} />
         </HeaderParagraph>
       )}
     </div>

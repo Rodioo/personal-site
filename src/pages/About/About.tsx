@@ -13,6 +13,7 @@ import {useNavigate} from 'react-router-dom';
 import resume from '../../assets/Resume.pdf';
 import ProjectPlatform from '../../common/types/project/projectPlatform.type.ts';
 
+//TODO: GET 2 RANDOM projects from the projects list and display them here
 const About = (): React.JSX.Element => {
   const navigate = useNavigate();
   const [currentDay, setCurrentDay] = useState('day');
