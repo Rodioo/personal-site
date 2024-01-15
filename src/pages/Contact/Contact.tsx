@@ -5,8 +5,10 @@ import Social from '../../components/Social/Social.tsx';
 import Button from '../../components/Button/Button.tsx';
 import ButtonType from '../../common/types/button.type.ts';
 import {IoIosSend} from 'react-icons/io';
+import NotificationBanner from '../../components/NotificationBanner/NotificationBanner.tsx';
+import NotificationType from '../../common/types/notification.type.ts';
 
-//TODO: design popups for success/error after sending mail,
+//TODO: Implement logic for appearance of notifications and closing them,
 // add debounce for appearance of error input message,
 // rethink logic for appearance of error message (to also appear if the field is empty after the user focused it but not when first loading the page),
 // add mail library, add functionality correct for displaying success/error popups after sending mail,
@@ -210,6 +212,10 @@ const Contact = (): React.JSX.Element => {
             <span className="mb-auto mt-auto">Send</span>
           </Button>
         </div>
+        <NotificationBanner type={NotificationType.Success} title='Message Sent' message="Your message has been sent. &#10; I'll try to get back to you soon."/>
+        <NotificationBanner type={NotificationType.Error} title='Error Occurred' message="Please try again later."/>
+        <NotificationBanner type={NotificationType.Warning} message="Make sure to complete all fields before sending the mail."/>
+        <NotificationBanner type={NotificationType.Information} message="Thank you for visiting my website."/>
       </HeaderParagraph>
     </div>
   );
