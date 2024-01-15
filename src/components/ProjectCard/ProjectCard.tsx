@@ -7,6 +7,7 @@ type Props = {
   title: string;
   description: string;
   platform?: ProjectPlatform;
+  onClick?: () => void;
 };
 
 const ProjectCard = ({
@@ -15,6 +16,7 @@ const ProjectCard = ({
   title,
   description,
   platform,
+  onClick = () => {},
 }: Props): React.JSX.Element => {
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
@@ -23,6 +25,7 @@ const ProjectCard = ({
         alt={'Project cover'}
         className="h-24 cursor-pointer grayscale duration-700 ease-in-out
         hover:-translate-y-0.5 hover:scale-110 hover:grayscale-0 md:h-28 lg:h-32"
+        onClick={onClick}
       />
       <div>
         <div className="flex flex-row justify-between">

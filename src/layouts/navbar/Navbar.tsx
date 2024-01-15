@@ -8,7 +8,7 @@ type NavButton = {
   path: string;
 };
 
-const navButtons: NavButton[] = Object.values(Page);
+const navButtons: NavButton[] = Object.values(Page).filter((page) => page.showInNavbar);
 
 const Navbar = (): React.JSX.Element => {
   const location = useLocation();
