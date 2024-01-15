@@ -9,6 +9,7 @@ import {FaGitAlt, FaRegCalendar, FaRegCalendarPlus} from 'react-icons/fa';
 import {MdOutlineRocketLaunch} from 'react-icons/md';
 import Social from '../Social/Social.tsx';
 import ProjectInfoCard from './ProjectInfoCard.tsx';
+import HeaderParagraph from '../HeaderParagraph/HeaderParagraph.tsx';
 
 type Props = {
   className?: string;
@@ -37,8 +38,20 @@ const DetailedProjectCard = ({
           ))}
         </div>
       </div>
+      <HeaderParagraph title="About">
+        <p>
+          &emsp;&emsp;
+          {'Guessify is an Android application designed for people with a passion for music. ' +
+            'It uses the Spotify API to fetch personalized data about the user based on his/her Spotify profile. '}
+        </p>
+        <p>
+          &emsp;&emsp;
+          {
+            "Users can interact with the application by choosing to either view their own music preferences through the Profile section, get a recommended song based on their top songs/artists or play a multiplayer 'Guess the Song' game with up to 3 other friends."
+          }
+        </p>
+      </HeaderParagraph>
       <div className="grid grid-cols-2 grid-rows-3 gap-x-6 gap-y-12">
-        {/*<p className="text-xl tracking-widest">More details</p>*/}
         <ProjectInfoCard
           icon={
             <AiOutlineDeploymentUnit className={PROJECT_INFO_CARD_ICON_STYLE} />
@@ -56,9 +69,7 @@ const DetailedProjectCard = ({
           <p>{projectInfo.stack.replace(/;;/g, ', ')}</p>
         </ProjectInfoCard>
         <ProjectInfoCard
-          icon={
-            <FaRegCalendar className={PROJECT_INFO_CARD_ICON_STYLE} />
-          }
+          icon={<FaRegCalendar className={PROJECT_INFO_CARD_ICON_STYLE} />}
           title="Created on">
           <p>
             {projectInfo.createdAt
@@ -67,9 +78,7 @@ const DetailedProjectCard = ({
           </p>
         </ProjectInfoCard>
         <ProjectInfoCard
-          icon={
-            <FaRegCalendarPlus className={PROJECT_INFO_CARD_ICON_STYLE} />
-          }
+          icon={<FaRegCalendarPlus className={PROJECT_INFO_CARD_ICON_STYLE} />}
           title="Last updated on">
           <p>
             {projectInfo.updatedAt

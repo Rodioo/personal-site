@@ -8,7 +8,6 @@ import {getGitPlatformFromLink, getPublishedPlatformFromLink} from '../../common
 
 //TODO: redesign projectCard to also be able to display full info about a project on the projectDetails page
 // Should take in account the full description and multiple colored images (slideshow or static top-down images)
-// Add links to either the hosted variant or to the github repo or both
 // In the future add github commits incorporated to the project details
 const ProjectDetails = (): React.JSX.Element => {
   const {projectId} = useParams();
