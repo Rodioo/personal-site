@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
     "axios": "^1.6.5",
     "framer-motion": "^10.16.16",
     "jsdom": "^23.0.1",

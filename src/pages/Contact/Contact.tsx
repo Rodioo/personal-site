@@ -57,34 +57,34 @@ const Contact = (): React.JSX.Element => {
       [name]: value,
     }));
 
-    validateInput(name, value)
+    validateInput(name, value);
   };
 
   const validateInput = (name: string, value: string) => {
-    const isInputValid = isEmailDataValid
+    const isInputValid = isEmailDataValid;
 
     switch (name) {
-      case "email": {
+      case 'email': {
         isInputValid.email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
         break;
       }
-      case "subject": {
-        isInputValid.subject = value.length > 0 && value.length < 78
+      case 'subject': {
+        isInputValid.subject = value.length > 0 && value.length < 78;
         break;
       }
-      case "content": {
-        isInputValid.content = value.length > 0 && value.length < 2000
+      case 'content': {
+        isInputValid.content = value.length > 0 && value.length < 2000;
         break;
       }
     }
 
-    setIsEmailDataValid(isInputValid)
-  }
+    setIsEmailDataValid(isInputValid);
+  };
 
   return (
     <div
       data-testid="CONTACT"
-      className="ml-auto mr-auto mt-8 flex w-10/12 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
+      className="relative ml-auto mr-auto mt-8 flex w-10/12 flex-1 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
       <HeaderParagraph title={'Reach me on LinkedIn'}>
         <Social
           icon={<FaLinkedin className="h-6 w-6" />}
@@ -112,7 +112,7 @@ const Contact = (): React.JSX.Element => {
             />
             {emailData.email.length > 0 && !isEmailDataValid.email && (
               <span
-                className="absolute right-0 flex min-h-32"
+                className="min-h-32 absolute right-0 flex"
                 onMouseOver={() => setHoveringDataName('email')}
                 onMouseOut={() => setHoveringDataName(undefined)}>
                 <div
@@ -123,7 +123,7 @@ const Contact = (): React.JSX.Element => {
                     Please enter a valid email address
                   </div>
                 </div>
-                <span className="absolute right-0 flex h-3 w-3 z-20">
+                <span className="absolute right-0 z-20 flex h-3 w-3">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
                   <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
                 </span>
@@ -148,7 +148,7 @@ const Contact = (): React.JSX.Element => {
             />
             {emailData.subject.length > 0 && !isEmailDataValid.subject && (
               <span
-                className="absolute right-0 flex min-h-32"
+                className="min-h-32 absolute right-0 flex"
                 onMouseOver={() => setHoveringDataName('subject')}
                 onMouseOut={() => setHoveringDataName(undefined)}>
                 <div
@@ -159,7 +159,7 @@ const Contact = (): React.JSX.Element => {
                     Please enter a subject for the mail (max. 78 chars)
                   </div>
                 </div>
-                <span className="absolute right-0 flex h-3 w-3 z-20">
+                <span className="absolute right-0 z-20 flex h-3 w-3">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
                   <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
                 </span>
@@ -170,7 +170,7 @@ const Contact = (): React.JSX.Element => {
             <textarea
               ref={textAreaRef}
               className={`
-                  text-lg scrollbar ease w-full resize-none border-b-2 bg-transparent pl-1 outline-none transition-colors duration-700 focus:border-b-picton-blue
+                  scrollbar ease w-full resize-none border-b-2 bg-transparent pl-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue
                   ${
                     emailData.content.length > 0 &&
                     !isEmailDataValid.content &&
@@ -186,7 +186,7 @@ const Contact = (): React.JSX.Element => {
             />
             {emailData.content.length > 0 && !isEmailDataValid.content && (
               <span
-                className="absolute right-0 flex min-h-32"
+                className="min-h-32 absolute right-0 flex"
                 onMouseOver={() => setHoveringDataName('content')}
                 onMouseOut={() => setHoveringDataName(undefined)}>
                 <div
@@ -197,7 +197,7 @@ const Contact = (): React.JSX.Element => {
                     Please enter a content for the mail (max. 2000 chars)
                   </div>
                 </div>
-                <span className="absolute right-0 flex h-3 w-3 z-20">
+                <span className="absolute right-0 z-20 flex h-3 w-3">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
                   <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
                 </span>
@@ -212,11 +212,11 @@ const Contact = (): React.JSX.Element => {
             <span className="mb-auto mt-auto">Send</span>
           </Button>
         </div>
-        <NotificationBanner type={NotificationType.Success} title='Message Sent' message="Your message has been sent. &#10; I'll try to get back to you soon."/>
-        <NotificationBanner type={NotificationType.Error} title='Error Occurred' message="Please try again later."/>
-        <NotificationBanner type={NotificationType.Warning} message="Make sure to complete all fields before sending the mail."/>
-        <NotificationBanner type={NotificationType.Information} message="Thank you for visiting my website."/>
       </HeaderParagraph>
+      <NotificationBanner
+        type={NotificationType.Warning}
+        message="Make sure to complete all fields before sending the mail."
+      />
     </div>
   );
 };
