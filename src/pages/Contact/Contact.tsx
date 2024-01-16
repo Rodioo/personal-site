@@ -5,16 +5,19 @@ import Social from '../../components/Social/Social.tsx';
 import Button from '../../components/Button/Button.tsx';
 import ButtonType from '../../common/types/button.type.ts';
 import {IoIosSend} from 'react-icons/io';
+import {useAppDispatch} from '../../store/hooks.ts';
+import {onShow} from '../../store/notification/notificationSlice.ts';
+import NotificationType from '../../common/types/notification/notification.type.ts';
 import NotificationBanner from '../../components/NotificationBanner/NotificationBanner.tsx';
-import NotificationType from '../../common/types/notification.type.ts';
 
-//TODO: Implement logic for appearance of notifications and closing them,
-// add debounce for appearance of error input message,
+//TODO: add debounce for appearance of error input message,
 // rethink logic for appearance of error message (to also appear if the field is empty after the user focused it but not when first loading the page),
 // add mail library, add functionality correct for displaying success/error popups after sending mail,
 // add loading screen for sending mail, add captcha after pressing send, add tests for input, refactor,
 // redesign hover effect popup and add animation
 const Contact = (): React.JSX.Element => {
+  const dispatch = useAppDispatch();
+
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const [emailData, setEmailData] = useState({
@@ -80,6 +83,20 @@ const Contact = (): React.JSX.Element => {
 
     setIsEmailDataValid(isInputValid);
   };
+
+  const handleSendMail = () => {
+    dispatch(onShow({
+      type: NotificationType.Warning,
+      message: "Please fill out all fields before sending the mail."
+    }))
+
+    setTimeout(() => {
+      dispatch(onShow({
+        type: NotificationType.Success,
+        title: "Message Sent"
+      }))
+    }, 2000)
+  }
 
   return (
     <div
@@ -170,7 +187,7 @@ const Contact = (): React.JSX.Element => {
             <textarea
               ref={textAreaRef}
               className={`
-                  scrollbar ease w-full resize-none border-b-2 bg-transparent pl-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue
+                  ease w-full resize-none border-b-2 bg-transparent pl-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue
                   ${
                     emailData.content.length > 0 &&
                     !isEmailDataValid.content &&
@@ -206,17 +223,14 @@ const Contact = (): React.JSX.Element => {
           </div>
           <Button
             type={ButtonType.Primary}
-            onClick={() => {}}
+            onClick={handleSendMail}
             className="ml-auto mr-auto w-fit">
             <IoIosSend className="m-auto h-5 w-5 lg:h-6 lg:w-6" />
             <span className="mb-auto mt-auto">Send</span>
           </Button>
         </div>
       </HeaderParagraph>
-      <NotificationBanner
-        type={NotificationType.Warning}
-        message="Make sure to complete all fields before sending the mail."
-      />
+      <NotificationBanner />
     </div>
   );
 };
