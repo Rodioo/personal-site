@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import HeaderParagraph from '../../components/HeaderParagraph/HeaderParagraph.tsx';
 import {FaLinkedin} from 'react-icons/fa';
 import Social from '../../components/Social/Social.tsx';
@@ -6,15 +6,16 @@ import Button from '../../components/Button/Button.tsx';
 import ButtonType from '../../common/types/button.type.ts';
 import {IoIosSend} from 'react-icons/io';
 import {useAppDispatch} from '../../store/hooks.ts';
-import {onShow} from '../../store/notification/notificationSlice.ts';
 import NotificationType from '../../common/types/notification/notification.type.ts';
 import NotificationBanner from '../../components/NotificationBanner/NotificationBanner.tsx';
+import axios from 'axios';
+import {onShow} from '../../store/notification/notificationSlice.ts';
+import {Transition} from '@headlessui/react';
 
-//TODO: add debounce for appearance of error input message,
-// rethink logic for appearance of error message (to also appear if the field is empty after the user focused it but not when first loading the page),
-// add mail library, add functionality correct for displaying success/error popups after sending mail,
+//TODO: check error for onShow non-serializable
+// refactor input field high priority
+// add debounce for appearance of error input message,
 // add loading screen for sending mail, add captcha after pressing send, add tests for input, refactor,
-// redesign hover effect popup and add animation
 const Contact = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
 
@@ -30,6 +31,12 @@ const Contact = (): React.JSX.Element => {
     subject: false,
     content: false,
   });
+  const [shouldDisplayError, setShouldDisplayError] = useState({
+    email: false,
+    subject: false,
+    content: false,
+  });
+  const [canSendMail, setCanSendMail] = useState(false);
   const [hoveringDataName, setHoveringDataName] = useState<string>();
 
   const handleAutoExpand = () => {
@@ -64,39 +71,74 @@ const Contact = (): React.JSX.Element => {
   };
 
   const validateInput = (name: string, value: string) => {
-    const isInputValid = isEmailDataValid;
+    let isInputValid: boolean;
 
     switch (name) {
       case 'email': {
-        isInputValid.email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        isInputValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
         break;
       }
       case 'subject': {
-        isInputValid.subject = value.length > 0 && value.length < 78;
+        isInputValid = value.length > 0 && value.length < 78;
         break;
       }
       case 'content': {
-        isInputValid.content = value.length > 0 && value.length < 2000;
+        isInputValid = value.length > 0 && value.length < 2000;
         break;
       }
     }
 
-    setIsEmailDataValid(isInputValid);
+    setIsEmailDataValid((prevData) => ({
+      ...prevData,
+      [name]: isInputValid,
+    }));
+  };
+
+  const handleUpdateDisplayError = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    value: boolean
+  ) => {
+    const name = event.target.name;
+
+    setShouldDisplayError((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSendMail = () => {
-    dispatch(onShow({
-      type: NotificationType.Warning,
-      message: "Please fill out all fields before sending the mail."
-    }))
+    const URL = `/email/send`;
+    axios
+      .post(URL, emailData)
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch(
+            onShow({
+              type: NotificationType.Success,
+              title: 'Mail sent successfully',
+            })
+          );
+        }
+      })
+      .catch((exception) => {
+        console.log(exception);
+        dispatch(
+          onShow({
+            type: NotificationType.Error,
+            title: 'An error occurred',
+            message: 'Failed to send mail',
+          })
+        );
+      });
+  };
 
-    setTimeout(() => {
-      dispatch(onShow({
-        type: NotificationType.Success,
-        title: "Message Sent"
-      }))
-    }, 2000)
-  }
+  useEffect(() => {
+    console.log(isEmailDataValid);
+    const allEmailInputsAreValid = Object.values(isEmailDataValid).every(
+      (isValid) => isValid
+    );
+    setCanSendMail(allEmailInputsAreValid);
+  }, [isEmailDataValid]);
 
   return (
     <div
@@ -106,7 +148,7 @@ const Contact = (): React.JSX.Element => {
         <Social
           icon={<FaLinkedin className="h-6 w-6" />}
           link="https://www.linkedin.com/in/antonio-falcescu/"
-          text="Antonio Fălcescu"
+          text="Antonio Falcescu"
         />
       </HeaderParagraph>
       <HeaderParagraph title={'Send me an email'}>
@@ -116,8 +158,8 @@ const Contact = (): React.JSX.Element => {
               className={`
                   ease w-full border-b-2 bg-transparent p-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue 
                   ${
-                    emailData.email.length > 0 &&
-                    !isEmailDataValid.email &&
+                    ((shouldDisplayError.email && !isEmailDataValid.email) ||
+                      hoveringDataName === 'email') &&
                     'border-b-red-500'
                   }  
               `}
@@ -126,34 +168,62 @@ const Contact = (): React.JSX.Element => {
               name="email"
               value={emailData.email}
               onChange={handleInputChange}
+              onFocus={(event) => handleUpdateDisplayError(event, true)}
+              onBlur={(event) =>
+                setTimeout(() => {
+                  handleUpdateDisplayError(event, false);
+                }, 2000)
+              }
             />
-            {emailData.email.length > 0 && !isEmailDataValid.email && (
-              <span
-                className="min-h-32 absolute right-0 flex"
-                onMouseOver={() => setHoveringDataName('email')}
-                onMouseOut={() => setHoveringDataName(undefined)}>
-                <div
-                  className={`z-10 ${
-                    hoveringDataName === 'email' ? 'block' : 'hidden'
-                  } rounded-sm bg-red-500 px-3 py-2`}>
-                  <div className="text-center text-sm">
-                    Please enter a valid email address
-                  </div>
+            <Transition
+              className="min-h-32 absolute right-0 flex"
+              show={
+                (shouldDisplayError.email && !isEmailDataValid.email) ||
+                hoveringDataName === 'email'
+              }
+              enter="transition-all ease-in-out duration-700"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-all ease-in-out duration-1000"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+              onMouseOver={() => setHoveringDataName('email')}
+              onMouseOut={() => setHoveringDataName(undefined)}>
+              <Transition
+                className={`z-10 ${NotificationType.Error.background} ${NotificationType.Error.border} rounded-sm bg-red-500 px-3 py-2`}
+                show={hoveringDataName === 'email'}
+                enter="transition-all ease-in-out duration-700"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-all ease-in-out duration-1000"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0">
+                <div className="text-center text-sm">
+                  Please enter a valid email address
                 </div>
-                <span className="absolute right-0 z-20 flex h-3 w-3">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
-                </span>
-              </span>
-            )}
+              </Transition>
+              <Transition
+                className={`absolute right-0 z-10 flex h-3 w-3`}
+                show={hoveringDataName !== 'email'}
+                enter="transition-all ease-in-out duration-700"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-all ease-in-out duration-1000"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
+              </Transition>
+            </Transition>
           </div>
           <div className="relative flex flex-row justify-between">
             <input
               className={`
                   ease w-full border-b-2 bg-transparent p-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue
                   ${
-                    emailData.subject.length > 0 &&
-                    !isEmailDataValid.subject &&
+                    ((shouldDisplayError.subject &&
+                      !isEmailDataValid.subject) ||
+                      hoveringDataName === 'subject') &&
                     'border-b-red-500'
                   }  
               `}
@@ -162,26 +232,55 @@ const Contact = (): React.JSX.Element => {
               name="subject"
               value={emailData.subject}
               onChange={handleInputChange}
+              onFocus={(event) => {
+                handleUpdateDisplayError(event, true);
+              }}
+              onBlur={(event) =>
+                setTimeout(() => {
+                  handleUpdateDisplayError(event, false);
+                }, 2000)
+              }
             />
-            {emailData.subject.length > 0 && !isEmailDataValid.subject && (
-              <span
-                className="min-h-32 absolute right-0 flex"
-                onMouseOver={() => setHoveringDataName('subject')}
-                onMouseOut={() => setHoveringDataName(undefined)}>
-                <div
-                  className={`z-10 ${
-                    hoveringDataName === 'subject' ? 'block' : 'hidden'
-                  } rounded-sm bg-red-500 px-3 py-2`}>
-                  <div className="text-center text-sm">
-                    Please enter a subject for the mail (max. 78 chars)
-                  </div>
+            <Transition
+              className="min-h-32 absolute right-0 flex"
+              show={
+                (shouldDisplayError.subject && !isEmailDataValid.subject) ||
+                hoveringDataName === 'subject'
+              }
+              enter="transition-all ease-in-out duration-700"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-all ease-in-out duration-1000"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+              onMouseOver={() => setHoveringDataName('subject')}
+              onMouseOut={() => setHoveringDataName(undefined)}>
+              <Transition
+                className={`z-10 ${NotificationType.Error.background} ${NotificationType.Error.border} rounded-sm bg-red-500 px-3 py-2`}
+                show={hoveringDataName === 'subject'}
+                enter="transition-all ease-in-out duration-700"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-all ease-in-out duration-1000"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0">
+                <div className="text-center text-sm">
+                  Please enter a subject for the mail (max. 78 chars)
                 </div>
-                <span className="absolute right-0 z-20 flex h-3 w-3">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
-                </span>
-              </span>
-            )}
+              </Transition>
+              <Transition
+                className={`absolute right-0 z-10 flex h-3 w-3`}
+                show={hoveringDataName !== 'subject'}
+                enter="transition-all ease-in-out duration-700"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-all ease-in-out duration-1000"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
+              </Transition>
+            </Transition>
           </div>
           <div className="relative flex flex-row justify-between">
             <textarea
@@ -189,8 +288,9 @@ const Contact = (): React.JSX.Element => {
               className={`
                   ease w-full resize-none border-b-2 bg-transparent pl-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue
                   ${
-                    emailData.content.length > 0 &&
-                    !isEmailDataValid.content &&
+                    ((shouldDisplayError.content &&
+                      !isEmailDataValid.content) ||
+                      hoveringDataName === 'content') &&
                     'border-b-red-500'
                   }  
               `}
@@ -199,30 +299,58 @@ const Contact = (): React.JSX.Element => {
               value={emailData.content}
               onChange={handleInputChange}
               onInput={handleAutoExpand}
+              onFocus={(event) => handleUpdateDisplayError(event, true)}
+              onBlur={(event) =>
+                setTimeout(() => {
+                  handleUpdateDisplayError(event, false);
+                }, 2000)
+              }
               rows={1}
             />
-            {emailData.content.length > 0 && !isEmailDataValid.content && (
-              <span
-                className="min-h-32 absolute right-0 flex"
-                onMouseOver={() => setHoveringDataName('content')}
-                onMouseOut={() => setHoveringDataName(undefined)}>
-                <div
-                  className={`z-10 ${
-                    hoveringDataName === 'content' ? 'block' : 'hidden'
-                  } rounded-sm bg-red-500 px-3 py-2`}>
-                  <div className="text-center text-sm">
-                    Please enter a content for the mail (max. 2000 chars)
-                  </div>
+            <Transition
+              className="min-h-32 absolute right-0 flex"
+              show={
+                (shouldDisplayError.content && !isEmailDataValid.content) ||
+                hoveringDataName === 'content'
+              }
+              enter="transition-all ease-in-out duration-700"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-all ease-in-out duration-1000"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+              onMouseOver={() => setHoveringDataName('content')}
+              onMouseOut={() => setHoveringDataName(undefined)}>
+              <Transition
+                className={`z-10 rounded-sm ${NotificationType.Error.background} ${NotificationType.Error.border} px-3 py-2`}
+                show={hoveringDataName === 'content'}
+                enter="transition-all ease-in-out duration-700"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-all ease-in-out duration-1000"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0">
+                <div className="text-center text-sm">
+                  Please enter a content for the mail (max. 2000 chars)
                 </div>
-                <span className="absolute right-0 z-20 flex h-3 w-3">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
-                </span>
-              </span>
-            )}
+              </Transition>
+              <Transition
+                className={`absolute right-0 z-10 flex h-3 w-3`}
+                show={hoveringDataName !== 'content'}
+                enter="transition-all ease-in-out duration-700"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-all ease-in-out duration-1000"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
+              </Transition>
+            </Transition>
           </div>
           <Button
             type={ButtonType.Primary}
+            disabled={!canSendMail}
             onClick={handleSendMail}
             className="ml-auto mr-auto w-fit">
             <IoIosSend className="m-auto h-5 w-5 lg:h-6 lg:w-6" />

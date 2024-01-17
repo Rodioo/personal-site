@@ -106,7 +106,7 @@ const About = (): React.JSX.Element => {
         <Social
           icon={<FaLinkedin className="h-6 w-6" />}
           link="https://www.linkedin.com/in/antonio-falcescu/"
-          text="Antonio Fălcescu"
+          text="Antonio Falcescu"
         />
         <Social
           icon={<SiLeetcode className="h-6 w-6" />}
