@@ -133,7 +133,6 @@ const Contact = (): React.JSX.Element => {
   };
 
   useEffect(() => {
-    console.log(isEmailDataValid);
     const allEmailInputsAreValid = Object.values(isEmailDataValid).every(
       (isValid) => isValid
     );
