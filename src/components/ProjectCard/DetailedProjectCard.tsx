@@ -91,13 +91,13 @@ const DetailedProjectCard = ({
           title="Source code">
           {projectInfo.gitLink && projectInfo.gitPlatform ? (
             <Social
-              className="ml-0"
+              className="-ml-1.5"
               icon={projectInfo.gitPlatform.icon}
               link={projectInfo.gitLink}
               text={projectInfo.gitPlatform.label}
             />
           ) : (
-            <p className="p-2">N/A</p>
+            <p className="pl-0.5 py-1.5">N/A</p>
           )}
         </ProjectInfoCard>
         <ProjectInfoCard
@@ -107,13 +107,13 @@ const DetailedProjectCard = ({
           title="Published on">
           {projectInfo.appLink && projectInfo.publishedPlatform ? (
             <Social
-              className="ml-0"
+              className="-ml-1.5"
               icon={projectInfo.publishedPlatform.icon}
               link={projectInfo.appLink}
               text={projectInfo.publishedPlatform.label}
             />
           ) : (
-            <p className="p-2">N/A</p>
+            <p className="pl-0.5 py-1.5">N/A</p>
           )}
         </ProjectInfoCard>
       </div>
