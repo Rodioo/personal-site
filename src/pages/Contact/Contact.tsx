@@ -11,8 +11,11 @@ import NotificationBanner from '../../components/NotificationBanner/Notification
 import axios from 'axios';
 import {onShow} from '../../store/notification/notificationSlice.ts';
 import {Transition} from '@headlessui/react';
+import AnimatedLayout from '../../layouts/AnimatedLayout/AnimatedLayout.tsx';
 
-//TODO: check error for onShow non-serializable
+//TODO: reset fields after sending the mail
+// add loading animation and disable button (should be automatically disabled after reseting fields)
+// check error for onShow non-serializable
 // refactor input field high priority
 // add debounce for appearance of error input message,
 // add loading screen for sending mail, add captcha after pressing send, add tests for input, refactor,
@@ -107,6 +110,12 @@ const Contact = (): React.JSX.Element => {
   };
 
   const handleSendMail = () => {
+    setIsEmailDataValid({
+      email: false,
+      subject: false,
+      content: false,
+    });
+
     const URL = `/email/send`;
     axios
       .post(URL, emailData)
@@ -130,6 +139,12 @@ const Contact = (): React.JSX.Element => {
           })
         );
       });
+
+    setEmailData({
+      email: '',
+      subject: '',
+      content: '',
+    });
   };
 
   useEffect(() => {
@@ -140,21 +155,22 @@ const Contact = (): React.JSX.Element => {
   }, [isEmailDataValid]);
 
   return (
-    <div
-      data-testid="CONTACT"
-      className="relative ml-auto mr-auto mt-8 flex w-10/12 flex-1 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
-      <HeaderParagraph title={'Reach me on LinkedIn'}>
-        <Social
-          icon={<FaLinkedin className="h-6 w-6" />}
-          link="https://www.linkedin.com/in/antonio-falcescu/"
-          text="Antonio Falcescu"
-        />
-      </HeaderParagraph>
-      <HeaderParagraph title={'Send me an email'}>
-        <div className="ml-8 flex flex-col gap-6">
-          <div className="relative flex flex-row justify-between">
-            <input
-              className={`
+    <AnimatedLayout>
+      <div
+        data-testid="CONTACT"
+        className="relative ml-auto mr-auto mt-8 flex w-10/12 flex-1 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
+        <HeaderParagraph title={'Reach me on LinkedIn'}>
+          <Social
+            icon={<FaLinkedin className="h-6 w-6" />}
+            link="https://www.linkedin.com/in/antonio-falcescu/"
+            text="Antonio Falcescu"
+          />
+        </HeaderParagraph>
+        <HeaderParagraph title={'Send me an email'}>
+          <div className="ml-8 flex flex-col gap-6">
+            <div className="relative flex flex-row justify-between">
+              <input
+                className={`
                   ease w-full border-b-2 bg-transparent p-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue 
                   ${
                     ((shouldDisplayError.email && !isEmailDataValid.email) ||
@@ -162,62 +178,62 @@ const Contact = (): React.JSX.Element => {
                     'border-b-red-500'
                   }  
               `}
-              placeholder="Your email address"
-              type="email"
-              name="email"
-              value={emailData.email}
-              onChange={handleInputChange}
-              onFocus={(event) => handleUpdateDisplayError(event, true)}
-              onBlur={(event) =>
-                setTimeout(() => {
-                  handleUpdateDisplayError(event, false);
-                }, 2000)
-              }
-            />
-            <Transition
-              className="min-h-32 absolute right-0 flex"
-              show={
-                (shouldDisplayError.email && !isEmailDataValid.email) ||
-                hoveringDataName === 'email'
-              }
-              enter="transition-all ease-in-out duration-700"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-all ease-in-out duration-1000"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-              onMouseOver={() => setHoveringDataName('email')}
-              onMouseOut={() => setHoveringDataName(undefined)}>
+                placeholder="Your email address"
+                type="email"
+                name="email"
+                value={emailData.email}
+                onChange={handleInputChange}
+                onFocus={(event) => handleUpdateDisplayError(event, true)}
+                onBlur={(event) =>
+                  setTimeout(() => {
+                    handleUpdateDisplayError(event, false);
+                  }, 2000)
+                }
+              />
               <Transition
-                className={`z-10 ${NotificationType.Error.background} ${NotificationType.Error.border} rounded-sm bg-red-500 px-3 py-2`}
-                show={hoveringDataName === 'email'}
+                className="min-h-32 absolute right-0 flex"
+                show={
+                  (shouldDisplayError.email && !isEmailDataValid.email) ||
+                  hoveringDataName === 'email'
+                }
                 enter="transition-all ease-in-out duration-700"
                 enterFrom="opacity-0"
                 enterTo="opacity-100"
                 leave="transition-all ease-in-out duration-1000"
                 leaveFrom="opacity-100"
-                leaveTo="opacity-0">
-                <div className="text-center text-sm">
-                  Please enter a valid email address
-                </div>
+                leaveTo="opacity-0"
+                onMouseOver={() => setHoveringDataName('email')}
+                onMouseOut={() => setHoveringDataName(undefined)}>
+                <Transition
+                  className={`z-10 ${NotificationType.Error.background} ${NotificationType.Error.border} rounded-sm bg-red-500 px-3 py-2`}
+                  show={hoveringDataName === 'email'}
+                  enter="transition-all ease-in-out duration-700"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-all ease-in-out duration-1000"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0">
+                  <div className="text-center text-sm">
+                    Please enter a valid email address
+                  </div>
+                </Transition>
+                <Transition
+                  className={`absolute right-0 z-10 flex h-3 w-3`}
+                  show={hoveringDataName !== 'email'}
+                  enter="transition-all ease-in-out duration-700"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-all ease-in-out duration-1000"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
+                </Transition>
               </Transition>
-              <Transition
-                className={`absolute right-0 z-10 flex h-3 w-3`}
-                show={hoveringDataName !== 'email'}
-                enter="transition-all ease-in-out duration-700"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-all ease-in-out duration-1000"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
-              </Transition>
-            </Transition>
-          </div>
-          <div className="relative flex flex-row justify-between">
-            <input
-              className={`
+            </div>
+            <div className="relative flex flex-row justify-between">
+              <input
+                className={`
                   ease w-full border-b-2 bg-transparent p-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue
                   ${
                     ((shouldDisplayError.subject &&
@@ -226,65 +242,65 @@ const Contact = (): React.JSX.Element => {
                     'border-b-red-500'
                   }  
               `}
-              placeholder="Subject"
-              type="text"
-              name="subject"
-              value={emailData.subject}
-              onChange={handleInputChange}
-              onFocus={(event) => {
-                handleUpdateDisplayError(event, true);
-              }}
-              onBlur={(event) =>
-                setTimeout(() => {
-                  handleUpdateDisplayError(event, false);
-                }, 2000)
-              }
-            />
-            <Transition
-              className="min-h-32 absolute right-0 flex"
-              show={
-                (shouldDisplayError.subject && !isEmailDataValid.subject) ||
-                hoveringDataName === 'subject'
-              }
-              enter="transition-all ease-in-out duration-700"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-all ease-in-out duration-1000"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-              onMouseOver={() => setHoveringDataName('subject')}
-              onMouseOut={() => setHoveringDataName(undefined)}>
+                placeholder="Subject"
+                type="text"
+                name="subject"
+                value={emailData.subject}
+                onChange={handleInputChange}
+                onFocus={(event) => {
+                  handleUpdateDisplayError(event, true);
+                }}
+                onBlur={(event) =>
+                  setTimeout(() => {
+                    handleUpdateDisplayError(event, false);
+                  }, 2000)
+                }
+              />
               <Transition
-                className={`z-10 ${NotificationType.Error.background} ${NotificationType.Error.border} rounded-sm bg-red-500 px-3 py-2`}
-                show={hoveringDataName === 'subject'}
+                className="min-h-32 absolute right-0 flex"
+                show={
+                  (shouldDisplayError.subject && !isEmailDataValid.subject) ||
+                  hoveringDataName === 'subject'
+                }
                 enter="transition-all ease-in-out duration-700"
                 enterFrom="opacity-0"
                 enterTo="opacity-100"
                 leave="transition-all ease-in-out duration-1000"
                 leaveFrom="opacity-100"
-                leaveTo="opacity-0">
-                <div className="text-center text-sm">
-                  Please enter a subject for the mail (max. 78 chars)
-                </div>
+                leaveTo="opacity-0"
+                onMouseOver={() => setHoveringDataName('subject')}
+                onMouseOut={() => setHoveringDataName(undefined)}>
+                <Transition
+                  className={`z-10 ${NotificationType.Error.background} ${NotificationType.Error.border} rounded-sm bg-red-500 px-3 py-2`}
+                  show={hoveringDataName === 'subject'}
+                  enter="transition-all ease-in-out duration-700"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-all ease-in-out duration-1000"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0">
+                  <div className="text-center text-sm">
+                    Please enter a subject for the mail (max. 78 chars)
+                  </div>
+                </Transition>
+                <Transition
+                  className={`absolute right-0 z-10 flex h-3 w-3`}
+                  show={hoveringDataName !== 'subject'}
+                  enter="transition-all ease-in-out duration-700"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-all ease-in-out duration-1000"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
+                </Transition>
               </Transition>
-              <Transition
-                className={`absolute right-0 z-10 flex h-3 w-3`}
-                show={hoveringDataName !== 'subject'}
-                enter="transition-all ease-in-out duration-700"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-all ease-in-out duration-1000"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
-              </Transition>
-            </Transition>
-          </div>
-          <div className="relative flex flex-row justify-between">
-            <textarea
-              ref={textAreaRef}
-              className={`
+            </div>
+            <div className="relative flex flex-row justify-between">
+              <textarea
+                ref={textAreaRef}
+                className={`
                   ease w-full resize-none border-b-2 bg-transparent pl-1 text-lg outline-none transition-colors duration-700 focus:border-b-picton-blue
                   ${
                     ((shouldDisplayError.content &&
@@ -293,72 +309,73 @@ const Contact = (): React.JSX.Element => {
                     'border-b-red-500'
                   }  
               `}
-              placeholder="Content"
-              name="content"
-              value={emailData.content}
-              onChange={handleInputChange}
-              onInput={handleAutoExpand}
-              onFocus={(event) => handleUpdateDisplayError(event, true)}
-              onBlur={(event) =>
-                setTimeout(() => {
-                  handleUpdateDisplayError(event, false);
-                }, 2000)
-              }
-              rows={1}
-            />
-            <Transition
-              className="min-h-32 absolute right-0 flex"
-              show={
-                (shouldDisplayError.content && !isEmailDataValid.content) ||
-                hoveringDataName === 'content'
-              }
-              enter="transition-all ease-in-out duration-700"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-all ease-in-out duration-1000"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-              onMouseOver={() => setHoveringDataName('content')}
-              onMouseOut={() => setHoveringDataName(undefined)}>
+                placeholder="Content"
+                name="content"
+                value={emailData.content}
+                onChange={handleInputChange}
+                onInput={handleAutoExpand}
+                onFocus={(event) => handleUpdateDisplayError(event, true)}
+                onBlur={(event) =>
+                  setTimeout(() => {
+                    handleUpdateDisplayError(event, false);
+                  }, 2000)
+                }
+                rows={1}
+              />
               <Transition
-                className={`z-10 rounded-sm ${NotificationType.Error.background} ${NotificationType.Error.border} px-3 py-2`}
-                show={hoveringDataName === 'content'}
+                className="min-h-32 absolute right-0 flex"
+                show={
+                  (shouldDisplayError.content && !isEmailDataValid.content) ||
+                  hoveringDataName === 'content'
+                }
                 enter="transition-all ease-in-out duration-700"
                 enterFrom="opacity-0"
                 enterTo="opacity-100"
                 leave="transition-all ease-in-out duration-1000"
                 leaveFrom="opacity-100"
-                leaveTo="opacity-0">
-                <div className="text-center text-sm">
-                  Please enter a content for the mail (max. 2000 chars)
-                </div>
+                leaveTo="opacity-0"
+                onMouseOver={() => setHoveringDataName('content')}
+                onMouseOut={() => setHoveringDataName(undefined)}>
+                <Transition
+                  className={`z-10 rounded-sm ${NotificationType.Error.background} ${NotificationType.Error.border} px-3 py-2`}
+                  show={hoveringDataName === 'content'}
+                  enter="transition-all ease-in-out duration-700"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-all ease-in-out duration-1000"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0">
+                  <div className="text-center text-sm">
+                    Please enter a content for the mail (max. 2000 chars)
+                  </div>
+                </Transition>
+                <Transition
+                  className={`absolute right-0 z-10 flex h-3 w-3`}
+                  show={hoveringDataName !== 'content'}
+                  enter="transition-all ease-in-out duration-700"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-all ease-in-out duration-1000"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
+                </Transition>
               </Transition>
-              <Transition
-                className={`absolute right-0 z-10 flex h-3 w-3`}
-                show={hoveringDataName !== 'content'}
-                enter="transition-all ease-in-out duration-700"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-all ease-in-out duration-1000"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
-              </Transition>
-            </Transition>
+            </div>
+            <Button
+              variant={ButtonType.Primary}
+              disabled={!canSendMail}
+              onClick={handleSendMail}
+              className="ml-auto mr-auto w-fit">
+              <IoIosSend className="m-auto h-5 w-5 lg:h-6 lg:w-6" />
+              <span className="mb-auto mt-auto">Send</span>
+            </Button>
           </div>
-          <Button
-            type={ButtonType.Primary}
-            disabled={!canSendMail}
-            onClick={handleSendMail}
-            className="ml-auto mr-auto w-fit">
-            <IoIosSend className="m-auto h-5 w-5 lg:h-6 lg:w-6" />
-            <span className="mb-auto mt-auto">Send</span>
-          </Button>
-        </div>
-      </HeaderParagraph>
-      <NotificationBanner />
-    </div>
+        </HeaderParagraph>
+        <NotificationBanner />
+      </div>
+    </AnimatedLayout>
   );
 };
 

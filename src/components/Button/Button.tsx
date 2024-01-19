@@ -3,7 +3,7 @@ import ButtonType from '../../common/types/button.type.ts';
 
 type Props = {
   className?: string;
-  type: ButtonType;
+  variant: ButtonType;
   disabled?: boolean;
   children: ReactNode;
   onClick?: () => void;
@@ -14,7 +14,7 @@ const Button = ({
   className = '',
   disabled = false,
   onClick = () => {},
-  type,
+  variant,
   children,
 }: Props): React.JSX.Element => {
   return (
@@ -29,13 +29,13 @@ const Button = ({
             : 'transition delay-150 duration-300 ease-in-out hover:-translate-y-0.5 hover:scale-105'
         }
         ${
-          type === ButtonType.Primary &&
+          variant === ButtonType.Primary &&
           (disabled
             ? 'rounded-lg bg-picton-blue px-4 py-3'
             : 'rounded-lg bg-picton-blue px-4 py-3 hover:bg-ncs-blue hover:shadow-xl')
         } 
         ${
-          type === ButtonType.Link &&
+          variant === ButtonType.Link &&
           (disabled
             ? 'mx-4 my-3'
             : 'mx-4 my-3 hover:text-baby-blue hover:underline')

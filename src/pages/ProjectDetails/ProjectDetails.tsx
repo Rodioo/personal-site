@@ -4,7 +4,11 @@ import axios from '../../../axios.config.ts';
 import HeaderParagraph from '../../components/HeaderParagraph/HeaderParagraph.tsx';
 import ProjectInfo from '../../common/types/project/projectInfo.type.ts';
 import DetailedProjectCard from '../../components/ProjectCard/DetailedProjectCard.tsx';
-import {getGitPlatformFromLink, getPublishedPlatformFromLink} from '../../common/utils/utils.ts';
+import {
+  getGitPlatformFromLink,
+  getPublishedPlatformFromLink,
+} from '../../common/utils/utils.ts';
+import AnimatedLayout from '../../layouts/AnimatedLayout/AnimatedLayout.tsx';
 
 //TODO: redesign projectCard to also be able to display full info about a project on the projectDetails page
 // Should take in account the full description and multiple colored images (slideshow or static top-down images)
@@ -28,16 +32,20 @@ const ProjectDetails = (): React.JSX.Element => {
             '/' +
             response.data.coverImagePath;
           if (response.data.createdAt) {
-            response.data.createdAt = new Date(response.data.createdAt)
+            response.data.createdAt = new Date(response.data.createdAt);
           }
           if (response.data.updatedAt) {
-            response.data.updatedAt = new Date(response.data.updatedAt)
+            response.data.updatedAt = new Date(response.data.updatedAt);
           }
           if (response.data.gitLink) {
-            response.data.gitPlatform = getGitPlatformFromLink(response.data.gitLink)
+            response.data.gitPlatform = getGitPlatformFromLink(
+              response.data.gitLink
+            );
           }
           if (response.data.appLink) {
-            response.data.publishedPlatform = getPublishedPlatformFromLink(response.data.appLink)
+            response.data.publishedPlatform = getPublishedPlatformFromLink(
+              response.data.appLink
+            );
           }
           setProjectInfo(response.data);
         }
@@ -52,15 +60,17 @@ const ProjectDetails = (): React.JSX.Element => {
   }, []);
 
   return (
-    <div
-      data-testid="PROJECTS"
-      className="ml-auto mr-auto mt-8 flex w-10/12 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
-      {projectInfo && (
-        <HeaderParagraph title={projectInfo.title}>
-          <DetailedProjectCard projectInfo={projectInfo} />
-        </HeaderParagraph>
-      )}
-    </div>
+    <AnimatedLayout>
+      <div
+        data-testid="PROJECTS"
+        className="ml-auto mr-auto mt-8 flex w-10/12 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
+        {projectInfo && (
+          <HeaderParagraph title={projectInfo.title}>
+            <DetailedProjectCard projectInfo={projectInfo} />
+          </HeaderParagraph>
+        )}
+      </div>
+    </AnimatedLayout>
   );
 };
 

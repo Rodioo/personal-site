@@ -6,13 +6,15 @@ import ProjectInfo from '../../common/types/project/projectInfo.type.ts';
 import PlatformCategory from '../../common/types/project/projectCategory.type.ts';
 import axios from '../../../axios.config.ts';
 import {useNavigate} from 'react-router-dom';
+import AnimatedLayout from '../../layouts/AnimatedLayout/AnimatedLayout.tsx';
 
 type GroupedProjects = {
   [key in PlatformCategory]?: ProjectInfo[];
 };
 
+//TODO: needs optimization or loading screen
 const Projects = (): React.JSX.Element => {
-  const [groupedProjects, setGroupedProjects] = useState<GroupedProjects>({});
+  const [groupedProjects, setGroupedProjects] = useState<GroupedProjects>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,32 +50,34 @@ const Projects = (): React.JSX.Element => {
   }, []);
 
   return (
-    <div
-      data-testid="PROJECTS"
-      className="ml-auto mr-auto mt-8 flex w-10/12 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
-      {groupedProjects &&
-        Object.keys(groupedProjects).map((category) => (
-          <HeaderParagraph
-            title={category}
-            key={category}>
-            {groupedProjects[category as PlatformCategory]?.map(
-              (projectInfo) => (
-                <ProjectCard
-                  key={projectInfo.id}
-                  className="mt-2"
-                  backgroundSrc={projectInfo.coverImagePath}
-                  title={projectInfo.title}
-                  description={projectInfo.shortDescription}
-                  platform={ProjectPlatform[projectInfo.platform]}
-                  onClick={() => {
-                    navigate(`/projects/${projectInfo.id}`)
-                  }}
-                />
-              )
-            )}
-          </HeaderParagraph>
-        ))}
-    </div>
+    <AnimatedLayout>
+      <div
+        data-testid="PROJECTS"
+        className="ml-auto mr-auto mt-8 flex w-10/12 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
+        {groupedProjects &&
+          Object.keys(groupedProjects).map((category) => (
+            <HeaderParagraph
+              title={category}
+              key={category}>
+              {groupedProjects[category as PlatformCategory]?.map(
+                (projectInfo) => (
+                  <ProjectCard
+                    key={projectInfo.id}
+                    className="mt-2"
+                    backgroundSrc={projectInfo.coverImagePath}
+                    title={projectInfo.title}
+                    description={projectInfo.shortDescription}
+                    platform={ProjectPlatform[projectInfo.platform]}
+                    onClick={() => {
+                      navigate(`/projects/${projectInfo.id}`);
+                    }}
+                  />
+                )
+              )}
+            </HeaderParagraph>
+          ))}
+      </div>
+    </AnimatedLayout>
   );
 };
 
