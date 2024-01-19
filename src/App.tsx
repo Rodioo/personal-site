@@ -5,7 +5,6 @@ import store from './store/store.ts';
 import {AnimatePresence} from 'framer-motion';
 import React from 'react';
 
-//TODO: check why does the refreshed page does not render after switching once
 function App() {
   const location = useLocation();
   const element = useOutlet();
@@ -17,6 +16,14 @@ function App() {
         <AnimatePresence
           mode="wait"
           initial={true}>
+          {/*
+            Problem:
+              can't use <Outlet /> because it has its own Provider component as a direct child
+              which causes AnimatePresence to not be able to animate the "exit" event of the pages
+            Workaround:
+              manually render each page with React.cloneElement with the useOutlet hook
+              (same outcome because <Outlet /> also uses this useOutlet hook to render the pages)
+          */}
           {element && React.cloneElement(element, {key: location.pathname})}
         </AnimatePresence>
       </Provider>
