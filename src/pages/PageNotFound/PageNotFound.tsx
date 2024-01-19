@@ -1,15 +1,18 @@
 import React from 'react';
 import {useRouteError} from 'react-router-dom';
+import AnimatedLayout from '../../layouts/AnimatedLayout/AnimatedLayout.tsx';
 
 const PageNotFound = (): React.JSX.Element => {
   const error = useRouteError();
 
   return (
-    <div>
-      {errorTypeIsErrorNotFound(error) && (
-        <div data-testid="errorMessage">{error.data}</div>
-      )}
-    </div>
+    <AnimatedLayout>
+      <div>
+        {errorTypeIsErrorNotFound(error) && (
+          <div data-testid="errorMessage">{error.data}</div>
+        )}
+      </div>
+    </AnimatedLayout>
   );
 };
 
