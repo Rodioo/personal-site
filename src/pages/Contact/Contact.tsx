@@ -10,13 +10,13 @@ import NotificationType from '../../common/types/notification/notification.type.
 import NotificationBanner from '../../components/NotificationBanner/NotificationBanner.tsx';
 import axios from 'axios';
 import {onShow} from '../../store/notification/notificationSlice.ts';
-import {Transition} from '@headlessui/react';
 import AnimatedLayout from '../../layouts/AnimatedLayout/AnimatedLayout.tsx';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.tsx';
 
-//TODO: reset fields after sending the mail
+//TODO: refactor input field high priority
+// reset fields after sending the mail
 // add loading animation and disable button (should be automatically disabled after reseting fields)
 // check error for onShow non-serializable
-// refactor input field high priority
 // add debounce for appearance of error input message,
 // add loading screen for sending mail, add captcha after pressing send, add tests for input, refactor,
 const Contact = (): React.JSX.Element => {
@@ -190,46 +190,16 @@ const Contact = (): React.JSX.Element => {
                   }, 2000)
                 }
               />
-              <Transition
-                className="min-h-32 absolute right-0 flex"
-                show={
+              <ErrorMessage
+                showMessage={hoveringDataName === 'email'}
+                showError={
                   (shouldDisplayError.email && !isEmailDataValid.email) ||
                   hoveringDataName === 'email'
                 }
-                enter="transition-all ease-in-out duration-700"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-all ease-in-out duration-1000"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+                message="Please enter a valid email address"
                 onMouseOver={() => setHoveringDataName('email')}
-                onMouseOut={() => setHoveringDataName(undefined)}>
-                <Transition
-                  className={`z-10 ${NotificationType.Error.background} ${NotificationType.Error.border} rounded-sm bg-red-500 px-3 py-2`}
-                  show={hoveringDataName === 'email'}
-                  enter="transition-all ease-in-out duration-700"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="transition-all ease-in-out duration-1000"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0">
-                  <div className="text-center text-sm">
-                    Please enter a valid email address
-                  </div>
-                </Transition>
-                <Transition
-                  className={`absolute right-0 z-10 flex h-3 w-3`}
-                  show={hoveringDataName !== 'email'}
-                  enter="transition-all ease-in-out duration-700"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="transition-all ease-in-out duration-1000"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
-                </Transition>
-              </Transition>
+                onMouseOut={() => setHoveringDataName(undefined)}
+              />
             </div>
             <div className="relative flex flex-row justify-between">
               <input
@@ -256,46 +226,16 @@ const Contact = (): React.JSX.Element => {
                   }, 2000)
                 }
               />
-              <Transition
-                className="min-h-32 absolute right-0 flex"
-                show={
+              <ErrorMessage
+                showMessage={hoveringDataName === 'subject'}
+                showError={
                   (shouldDisplayError.subject && !isEmailDataValid.subject) ||
                   hoveringDataName === 'subject'
                 }
-                enter="transition-all ease-in-out duration-700"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-all ease-in-out duration-1000"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+                message="Please enter a subject for the mail (max. 78 chars)"
                 onMouseOver={() => setHoveringDataName('subject')}
-                onMouseOut={() => setHoveringDataName(undefined)}>
-                <Transition
-                  className={`z-10 ${NotificationType.Error.background} ${NotificationType.Error.border} rounded-sm bg-red-500 px-3 py-2`}
-                  show={hoveringDataName === 'subject'}
-                  enter="transition-all ease-in-out duration-700"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="transition-all ease-in-out duration-1000"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0">
-                  <div className="text-center text-sm">
-                    Please enter a subject for the mail (max. 78 chars)
-                  </div>
-                </Transition>
-                <Transition
-                  className={`absolute right-0 z-10 flex h-3 w-3`}
-                  show={hoveringDataName !== 'subject'}
-                  enter="transition-all ease-in-out duration-700"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="transition-all ease-in-out duration-1000"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
-                </Transition>
-              </Transition>
+                onMouseOut={() => setHoveringDataName(undefined)}
+              />
             </div>
             <div className="relative flex flex-row justify-between">
               <textarea
@@ -322,46 +262,16 @@ const Contact = (): React.JSX.Element => {
                 }
                 rows={1}
               />
-              <Transition
-                className="min-h-32 absolute right-0 flex"
-                show={
+              <ErrorMessage
+                showMessage={hoveringDataName === 'content'}
+                showError={
                   (shouldDisplayError.content && !isEmailDataValid.content) ||
                   hoveringDataName === 'content'
                 }
-                enter="transition-all ease-in-out duration-700"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-all ease-in-out duration-1000"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+                message="Please enter a content for the mail (max. 2000 chars)"
                 onMouseOver={() => setHoveringDataName('content')}
-                onMouseOut={() => setHoveringDataName(undefined)}>
-                <Transition
-                  className={`z-10 rounded-sm ${NotificationType.Error.background} ${NotificationType.Error.border} px-3 py-2`}
-                  show={hoveringDataName === 'content'}
-                  enter="transition-all ease-in-out duration-700"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="transition-all ease-in-out duration-1000"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0">
-                  <div className="text-center text-sm">
-                    Please enter a content for the mail (max. 2000 chars)
-                  </div>
-                </Transition>
-                <Transition
-                  className={`absolute right-0 z-10 flex h-3 w-3`}
-                  show={hoveringDataName !== 'content'}
-                  enter="transition-all ease-in-out duration-700"
-                  enterFrom="opacity-0"
-                  enterTo="opacity-100"
-                  leave="transition-all ease-in-out duration-1000"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
-                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-400" />
-                </Transition>
-              </Transition>
+                onMouseOut={() => setHoveringDataName(undefined)}
+              />
             </div>
             <Button
               variant={ButtonType.Primary}
