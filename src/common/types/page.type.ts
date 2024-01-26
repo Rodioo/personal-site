@@ -1,9 +1,9 @@
+import React from 'react';
 import Home from '../../pages/Home/Home.tsx';
 import About from '../../pages/About/About.tsx';
 import Projects from '../../pages/Projects/Projects.tsx';
 import Articles from '../../pages/Articles/Articles.tsx';
 import Contact from '../../pages/Contact/Contact.tsx';
-import React from 'react';
 import ProjectDetails from '../../pages/ProjectDetails/ProjectDetails.tsx';
 
 const Page = {
