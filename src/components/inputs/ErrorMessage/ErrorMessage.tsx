@@ -1,5 +1,5 @@
 import React from 'react';
-import NotificationType from '../../common/types/notification/notification.type.ts';
+import NotificationType from '../../../common/types/notification/notification.type.ts';
 import {Transition} from '@headlessui/react';
 
 type Props = {
