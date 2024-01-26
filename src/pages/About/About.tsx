@@ -99,16 +99,19 @@ const About = (): React.JSX.Element => {
         </HeaderParagraph>
         <HeaderParagraph title={'Socials'}>
           <Social
+            className='ml-4'
             icon={<FaGithub className="h-6 w-6" />}
             link="https://github.com/Rodioo"
             text="Rodioo"
           />
           <Social
+            className='ml-4'
             icon={<FaLinkedin className="h-6 w-6" />}
             link="https://www.linkedin.com/in/antonio-falcescu/"
             text="Antonio Falcescu"
           />
           <Social
+            className='ml-4'
             icon={<SiLeetcode className="h-6 w-6" />}
             link="https://leetcode.com/Rodioo/"
             text="Rodioo"

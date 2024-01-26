@@ -91,7 +91,7 @@ const DetailedProjectCard = ({
           title="Source code">
           {projectInfo.gitLink && projectInfo.gitPlatform ? (
             <Social
-              className="-ml-1.5"
+              className="-ml-2"
               icon={projectInfo.gitPlatform.icon}
               link={projectInfo.gitLink}
               text={projectInfo.gitPlatform.label}
@@ -107,7 +107,7 @@ const DetailedProjectCard = ({
           title="Published on">
           {projectInfo.appLink && projectInfo.publishedPlatform ? (
             <Social
-              className="-ml-1.5"
+              className="-ml-2"
               icon={projectInfo.publishedPlatform.icon}
               link={projectInfo.appLink}
               text={projectInfo.publishedPlatform.label}
