@@ -15,7 +15,7 @@ type ProjectInfo = {
   gitPlatform?: GitPlatform;
   appLink?: string;
   publishedPlatform?: PublishedPlatform;
-  images?: string[];
+  images: string;
   stack: string;
 };
 

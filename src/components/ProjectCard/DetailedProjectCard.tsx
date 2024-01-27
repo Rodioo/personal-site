@@ -1,7 +1,4 @@
 import React from 'react';
-import home from '../../assets/guessify/home.jpg';
-import discover from '../../assets/guessify/discover.jpg';
-import genre from '../../assets/guessify/genre.jpg';
 import ProjectInfo from '../../common/types/project/projectInfo.type.ts';
 import {AiOutlineDeploymentUnit} from 'react-icons/ai';
 import {FaCode} from 'react-icons/fa6';
@@ -16,7 +13,6 @@ type Props = {
   projectInfo: ProjectInfo;
 };
 
-const images = [home, discover, genre];
 const PROJECT_INFO_CARD_ICON_STYLE = 'ml-0 h-8 w-8 text-baby-blue';
 
 const DetailedProjectCard = ({
@@ -28,7 +24,7 @@ const DetailedProjectCard = ({
       <div>
         <p className="font-light">&emsp;{projectInfo.shortDescription}</p>
         <div className="scrollbar-hidden relative mt-1 flex gap-4 overflow-x-scroll">
-          {images.map((image) => (
+          {projectInfo.images?.split(";").map((image) => (
             <img
               key={image}
               src={image}
@@ -39,17 +35,11 @@ const DetailedProjectCard = ({
         </div>
       </div>
       <HeaderParagraph title="About">
-        <p>
-          &emsp;&emsp;
-          {'Guessify is an Android application designed for people with a passion for music. ' +
-            'It uses the Spotify API to fetch personalized data about the user based on his/her Spotify profile. '}
-        </p>
-        <p>
-          &emsp;&emsp;
-          {
-            "Users can interact with the application by choosing to either view their own music preferences through the Profile section, get a recommended song based on their top songs/artists or play a multiplayer 'Guess the Song' game with up to 3 other friends."
-          }
-        </p>
+        {projectInfo.longDescription.split("\n").map((descriptionParagraph, index) => (
+          <p key={index}>
+            &emsp;&emsp;{descriptionParagraph}
+          </p>
+        ))}
       </HeaderParagraph>
       <div className="grid grid-cols-2 grid-rows-3 gap-x-6 gap-y-12">
         <ProjectInfoCard
