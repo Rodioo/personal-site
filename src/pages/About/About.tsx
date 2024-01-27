@@ -25,7 +25,7 @@ const About = (): React.JSX.Element => {
   return (
     <AnimatedLayout>
       <div
-        data-testid="ABOUT"
+        data-testid={About.name}
         className="ml-auto mr-auto mt-8 flex w-10/12 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
         <div>
           <HeaderParagraph title={'About me'}>

@@ -118,7 +118,7 @@ const Contact = (): React.JSX.Element => {
   return (
     <AnimatedLayout>
       <div
-        data-testid="CONTACT"
+        data-testid={Contact.name}
         className="relative ml-auto mr-auto mt-8 flex w-10/12 flex-1 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
         <HeaderParagraph title={'Reach me on LinkedIn'}>
           <Social
