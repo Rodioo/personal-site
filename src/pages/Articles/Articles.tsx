@@ -4,10 +4,10 @@ import AnimatedLayout from '../../layouts/AnimatedLayout/AnimatedLayout.tsx';
 import axios from '../../../axios.config.ts';
 import Article from '../../common/types/article/article.type.ts';
 import ArticleCard from '../../components/ArticleCard/ArticleCard.tsx';
+import Loading from '../../components/Loading/Loading.tsx';
 
 const Articles = (): React.JSX.Element => {
   const [articles, setArticles] = useState<Article[]>();
-
 
   useEffect(() => {
     const URL = `/articles`;
@@ -23,7 +23,7 @@ const Articles = (): React.JSX.Element => {
               article.coverImagePath;
             article.createdAt = new Date(article.createdAt);
 
-            articlesAux.push(article)
+            articlesAux.push(article);
           }
           setArticles(articlesAux);
         }
@@ -37,18 +37,23 @@ const Articles = (): React.JSX.Element => {
       });
   }, []);
 
-  return (
-    <AnimatedLayout>
+  return articles ? (
+    <AnimatedLayout key={Articles.name}>
       <div
-        data-testid="ARTICLES"
+        data-testid={Articles.name}
         className="ml-auto mr-auto mt-8 flex w-10/12 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
         <HeaderParagraph title={'Articles'}>
-          {articles?.map((article) => (
-            <ArticleCard key={article.id} article={article} />
+          {articles.map((article) => (
+            <ArticleCard
+              key={article.id}
+              article={article}
+            />
           ))}
         </HeaderParagraph>
       </div>
     </AnimatedLayout>
+  ) : (
+    <Loading />
   );
 };
 

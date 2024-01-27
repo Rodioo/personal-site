@@ -9,10 +9,9 @@ import {
   getPublishedPlatformFromLink,
 } from '../../common/utils/utils.ts';
 import AnimatedLayout from '../../layouts/AnimatedLayout/AnimatedLayout.tsx';
+import Loading from '../../components/Loading/Loading.tsx';
 
-//TODO: redesign projectCard to also be able to display full info about a project on the projectDetails page
-// Should take in account the full description and multiple colored images (slideshow or static top-down images)
-// In the future add github commits incorporated to the project details
+//TODO In the future add github commits incorporated to the project details
 const ProjectDetails = (): React.JSX.Element => {
   const {projectId} = useParams();
   const [projectInfo, setProjectInfo] = useState<ProjectInfo>();
@@ -59,10 +58,10 @@ const ProjectDetails = (): React.JSX.Element => {
       });
   }, []);
 
-  return (
+  return projectInfo ? (
     <AnimatedLayout>
       <div
-        data-testid="PROJECTS"
+        data-testid={ProjectDetails.name}
         className="ml-auto mr-auto mt-8 flex w-10/12 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
         {projectInfo && (
           <HeaderParagraph title={projectInfo.title}>
@@ -71,6 +70,8 @@ const ProjectDetails = (): React.JSX.Element => {
         )}
       </div>
     </AnimatedLayout>
+  ) : (
+    <Loading />
   );
 };
 
