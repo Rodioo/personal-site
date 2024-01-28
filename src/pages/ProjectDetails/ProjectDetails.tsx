@@ -26,10 +26,15 @@ const ProjectDetails = (): React.JSX.Element => {
       .get<ProjectInfo>(URL)
       .then((response) => {
         if (response.status === 200) {
-          response.data.coverImagePath =
-            import.meta.env.VITE_APP_SERVER_STATIC_BASE_URL +
-            '/' +
-            response.data.coverImagePath;
+          const images: string[] = [];
+          if (response.data.images) {
+            for (let image of response.data.images.split(';')) {
+              image =
+                import.meta.env.VITE_APP_SERVER_STATIC_BASE_URL + '/' + image;
+              images.push(image);
+            }
+            response.data.images = images.join(';');
+          }
           if (response.data.createdAt) {
             response.data.createdAt = new Date(response.data.createdAt);
           }
