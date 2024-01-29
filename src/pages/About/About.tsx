@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {FaGithub, FaLinkedin, FaDownload} from 'react-icons/fa';
 import {SiLeetcode} from 'react-icons/si';
 import Social from '../../components/Social/Social.tsx';
@@ -6,15 +6,16 @@ import HeaderParagraph from '../../components/HeaderParagraph/HeaderParagraph.ts
 import Button from '../../components/Button/Button.tsx';
 import ButtonType from '../../common/types/button.type.ts';
 import ProjectCard from '../../components/ProjectCard/ProjectCard.tsx';
-import spanzuratoarea_photo from '../../assets/spanzuratoarea.png';
-import guessify_photo from '../../assets/guessify.png';
 import {FaRegFolderOpen} from 'react-icons/fa6';
 import {useNavigate} from 'react-router-dom';
 import resume from '../../assets/Resume.pdf';
 import ProjectPlatform from '../../common/types/project/projectPlatform.type.ts';
 import AnimatedLayout from '../../layouts/AnimatedLayout/AnimatedLayout.tsx';
+import axios from '../../../axios.config.ts';
+import ProjectInfo from '../../common/types/project/projectInfo.type.ts';
+import Loading from '../../components/Loading/Loading.tsx';
 
-//TODO: GET 2 RANDOM projects from the projects list and display them here
+//TODO: refactor from useEffect to some cache maybe useMemo
 const About = (): React.JSX.Element => {
   const navigate = useNavigate();
   const currentDay = useMemo(() => {
@@ -22,8 +23,38 @@ const About = (): React.JSX.Element => {
     return date.toLocaleDateString(undefined, {weekday: 'long'});
   }, []);
 
-  return (
-    <AnimatedLayout>
+  const [projects, setProjects] = useState<ProjectInfo[]>();
+
+  useEffect(() => {
+    const URL = `/projects`;
+    axios
+      .get<ProjectInfo[]>(URL)
+      .then((response) => {
+        if (response.status === 200) {
+          const projectsAux: ProjectInfo[] = [];
+          for (const project of response.data) {
+            if (project.id === 2 || project.id === 3) {
+              project.coverImagePath =
+                import.meta.env.VITE_APP_SERVER_STATIC_BASE_URL +
+                '/' +
+                project.coverImagePath;
+              projectsAux.push(project);
+            }
+          }
+          setProjects(projectsAux);
+        }
+      })
+      .catch((exception) => {
+        if (exception.response?.status === 404) {
+          console.log(exception.response.data);
+        } else {
+          console.log(exception);
+        }
+      });
+  }, []);
+
+  return projects ? (
+    <AnimatedLayout key={About.name}>
       <div
         data-testid={About.name}
         className="ml-auto mr-auto mt-8 flex w-10/12 flex-col gap-8 font-lato sm:w-2/3 md:w-3/5 xl:w-2/5">
@@ -66,20 +97,18 @@ const About = (): React.JSX.Element => {
         </div>
         <div>
           <HeaderParagraph title={'Projects'}>
-            <ProjectCard
-              className="mt-2"
-              backgroundSrc={guessify_photo}
-              title={'Guessify'}
-              description={`A Spotify based app that incorporates listening stats, song recommendations and a multiplayer 'Guess the Song' game`}
-              platform={ProjectPlatform.Android}
-            />
-            <ProjectCard
-              className="mt-6"
-              backgroundSrc={spanzuratoarea_photo}
-              title={'Spanzuratoarea'}
-              description={`Trivia game meant to improve Romanian kids' general knowledge`}
-              platform={ProjectPlatform.Android}
-            />
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                backgroundSrc={project.coverImagePath}
+                title={project.title}
+                description={project.shortDescription}
+                platform={ProjectPlatform[project.platform]}
+                onClick={() => {
+                  navigate(`/projects/${project.id}`);
+                }}
+              />
+            ))}
           </HeaderParagraph>
           <Button
             className="ml-auto mr-auto mt-6"
@@ -99,19 +128,19 @@ const About = (): React.JSX.Element => {
         </HeaderParagraph>
         <HeaderParagraph title={'Socials'}>
           <Social
-            className='ml-4'
+            className="ml-4"
             icon={<FaGithub className="h-6 w-6" />}
             link="https://github.com/Rodioo"
             text="Rodioo"
           />
           <Social
-            className='ml-4'
+            className="ml-4"
             icon={<FaLinkedin className="h-6 w-6" />}
             link="https://www.linkedin.com/in/antonio-falcescu/"
             text="Antonio Falcescu"
           />
           <Social
-            className='ml-4'
+            className="ml-4"
             icon={<SiLeetcode className="h-6 w-6" />}
             link="https://leetcode.com/Rodioo/"
             text="Rodioo"
@@ -119,6 +148,8 @@ const About = (): React.JSX.Element => {
         </HeaderParagraph>
       </div>
     </AnimatedLayout>
+  ) : (
+    <Loading />
   );
 };
 
