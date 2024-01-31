@@ -20,7 +20,7 @@ const About = (): React.JSX.Element => {
   const navigate = useNavigate();
   const currentDay = useMemo(() => {
     const date = new Date();
-    return date.toLocaleDateString(undefined, {weekday: 'long'});
+    return date.toLocaleDateString("en-GB", {weekday: 'long'});
   }, []);
 
   const [projects, setProjects] = useState<ProjectInfo[]>();
