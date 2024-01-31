@@ -15,32 +15,32 @@ const Page = {
   },
   About: {
     name: 'ABOUT',
-    path: '/about',
+    path: './about',
     element: React.createElement(About),
     showInNavbar: true,
   },
   Projects: {
     name: 'PROJECTS',
-    path: '/projects',
+    path: './projects',
     element: React.createElement(Projects),
     showInNavbar: true,
   },
   Articles: {
     name: 'ARTICLES',
-    path: '/articles',
+    path: './articles',
     element: React.createElement(Articles),
     showInNavbar: true,
   },
   Contact: {
     name: 'CONTACT',
-    path: '/contact',
+    path: './contact',
     element: React.createElement(Contact),
     showInNavbar: true,
 
   },
   ProjectDetails: {
     name: 'PROJECT_DETAILS',
-    path: '/projects/:projectId',
+    path: './projects/:projectId',
     element: React.createElement(ProjectDetails),
     showInNavbar: false,
   },
