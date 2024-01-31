@@ -4,7 +4,7 @@ import AnimatedLayout from '../../layouts/AnimatedLayout/AnimatedLayout.tsx';
 
 const PageNotFound = (): React.JSX.Element => {
   const error = useRouteError();
-
+  console.log(error)
   return (
     <AnimatedLayout>
       <div>
