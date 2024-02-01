@@ -6,7 +6,7 @@ import React from 'react';
 
 const App = (): React.JSX.Element => {
   return (
-    <div className="flex min-h-screen max-w-full flex-col bg-onyx py-8">
+    <div className="flex min-h-screen max-w-full flex-col bg-onyx">
       <Navbar />
       <Provider store={store}>
         <AnimatedOutlet />

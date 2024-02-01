@@ -19,7 +19,7 @@ const AnimatedLayout = ({children}: Props): React.JSX.Element => {
       exit="exit"
       variants={variants}
       transition={{duration: 0.5, type: 'easeInOut'}}
-      className="relative flex flex-1 flex-col">
+      className="relative flex flex-1 flex-col mt-16">
       {children}
     </motion.div>
   );

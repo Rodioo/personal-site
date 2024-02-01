@@ -10,6 +10,7 @@ export default {
       },
       colors: {
         'onyx': '#3D3D3D',
+        'jet': '#292929',
         'taupe-gray': '#848188',
         'picton-blue': '#1AA1DB',
         'ncs-blue': '#1586B7',

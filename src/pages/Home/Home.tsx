@@ -15,7 +15,7 @@ const Home = (): React.JSX.Element => {
     <AnimatedLayout>
       <div
         data-testid={Home.name}
-        className="mx-6 mt-20 flex flex-col font-lato md:mx-32 lg:mx-12 lg:flex-row lg:justify-between xl:mx-32 2xl:mx-40">
+        className="mx-6 flex flex-col font-lato md:mx-20 lg:mx-12 lg:flex-row lg:justify-between xl:mx-32 2xl:mx-40">
         <div className="mb-auto mt-auto flex h-64 flex-col justify-between 2xl:h-72">
           <span className="text-5xl tracking-wider text-white 2xl:text-6xl">
             Hi,
