@@ -15,7 +15,7 @@ const Home = (): React.JSX.Element => {
     <AnimatedLayout>
       <div
         data-testid={Home.name}
-        className="mx-6 mt-20 flex flex-col font-lato md:mx-32 lg:mx-12 lg:flex-row lg:justify-between xl:mx-32 2xl:mx-40">
+        className="lg:mt-16 mx-6 flex flex-col font-lato md:mx-20 lg:mx-12 lg:flex-row lg:justify-between xl:mx-32 2xl:mx-40">
         <div className="mb-auto mt-auto flex h-64 flex-col justify-between 2xl:h-72">
           <span className="text-5xl tracking-wider text-white 2xl:text-6xl">
             Hi,
@@ -58,7 +58,7 @@ const Home = (): React.JSX.Element => {
         <img
           src={homePhoto}
           alt=""
-          className="mt-24 w-full text-center lg:mt-0 lg:w-1/3"
+          className="mt-24 w-full text-center lg:mt-0 lg:w-1/3 md:w-4/5 lg:ml-0 lg:mr-0 ml-auto mr-auto"
         />
       </div>
     </AnimatedLayout>
