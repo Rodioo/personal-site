@@ -16,12 +16,12 @@ const Home = (): React.JSX.Element => {
       <div
         data-testid={Home.name}
         className="lg:mt-16 mx-6 flex flex-col font-lato md:mx-20 lg:mx-12 lg:flex-row lg:justify-between xl:mx-32 2xl:mx-40">
-        <div className="mb-auto mt-auto flex h-64 flex-col justify-between 2xl:h-72">
-          <span className="text-5xl tracking-wider text-white 2xl:text-6xl">
+        <div className="mb-auto mt-auto flex h-60 flex-col justify-between 2xl:h-72">
+          <span className="text-4xl sm:text-5xl tracking-wider text-white 2xl:text-6xl">
             Hi,
             <p className="mt-2">I'm Antonio Falcescu</p>
           </span>
-          <span className="text-taupe-gray">
+          <span className="text-taupe-gray h-16">
             <AnimatedText
               className="text-xl font-medium tracking-widest sm:text-2xl 2xl:text-3xl"
               text="Software Developer"
@@ -36,7 +36,7 @@ const Home = (): React.JSX.Element => {
               ]}
             />
           </span>
-          <div className="mt-12 flex gap-6">
+          <div className="mt-4 flex gap-6">
             <Button
               onClick={() => {
                 navigate('/projects');
@@ -58,7 +58,7 @@ const Home = (): React.JSX.Element => {
         <img
           src={homePhoto}
           alt=""
-          className="mt-24 w-full text-center lg:mt-0 lg:w-1/3 md:w-4/5 lg:ml-0 lg:mr-0 ml-auto mr-auto"
+          className="mt-16 w-full text-center lg:mt-0 lg:w-1/3 md:w-4/5 lg:ml-0 lg:mr-0 ml-auto mr-auto"
         />
       </div>
     </AnimatedLayout>
