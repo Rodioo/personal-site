@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import Page from '../../common/types/page.type.ts';
 import {FaLaptopCode} from 'react-icons/fa6';
+import BurgerMenu from '../../components/BurgerMenu/BurgerMenu.tsx';
 
 type NavButton = {
   name: string;
@@ -16,18 +17,17 @@ const Navbar = (): React.JSX.Element => {
   const location = useLocation();
 
   return (
-    <div className="flex w-full">
+    <div className="fixed z-50 flex w-full justify-between gap-4 px-6 py-4 backdrop-blur-lg md:px-4 xl:px-24">
       <Link
         to="/"
         onClick={() => {
           document.body.style.overflowY = 'auto';
         }}
-        className="mx-24
-        hidden cursor-pointer gap-2 whitespace-nowrap font-lato text-2xl font-bold text-white lg:flex">
-        <FaLaptopCode className="m-auto h-7 w-7" />
+        className="mb-1 flex cursor-pointer gap-2 whitespace-nowrap font-lato text-2xl font-bold text-white">
+        <FaLaptopCode className="mt-0.5 h-7 w-7" />
         Antonio Falcescu
       </Link>
-      <span className="flex w-full justify-around gap-4">
+      <span className="mb-auto mt-auto hidden w-full justify-around lg:flex">
         {navButtons.map((navButton) => (
           <Link
             key={navButton.name}
@@ -44,6 +44,9 @@ const Navbar = (): React.JSX.Element => {
             {navButton.name}
           </Link>
         ))}
+      </span>
+      <span className="fixed right-0 z-50 lg:hidden">
+        <BurgerMenu />
       </span>
     </div>
   );
