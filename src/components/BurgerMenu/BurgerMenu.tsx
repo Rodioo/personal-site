@@ -34,9 +34,8 @@ const BurgerMenu = (): React.JSX.Element => {
         <Menu.Items className="absolute right-1 z-10 w-56 origin-top-right rounded-md bg-jet shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
             {navButtons.map((navButton) => (
-              <Menu.Item>
+              <Menu.Item key={navButton.name}>
                 <Link
-                  key={navButton.name}
                   to={navButton.path}
                   onClick={() => {
                     document.body.style.overflowY = 'auto';
