@@ -17,7 +17,7 @@ const Navbar = (): React.JSX.Element => {
   const location = useLocation();
 
   return (
-    <div className="fixed z-50 flex w-full justify-between gap-4 border-b border-b-black px-6 py-2 backdrop-blur-lg md:px-4 xl:px-24">
+    <div className="fixed z-50 flex w-full justify-between gap-4 px-6 py-4 backdrop-blur-lg md:px-4 xl:px-24">
       <Link
         to="/"
         onClick={() => {
@@ -27,7 +27,7 @@ const Navbar = (): React.JSX.Element => {
         <FaLaptopCode className="mt-0.5 h-7 w-7" />
         Antonio Falcescu
       </Link>
-      <span className="mb-auto mt-auto hidden w-full justify-around md:flex">
+      <span className="mb-auto mt-auto hidden w-full justify-around lg:flex">
         {navButtons.map((navButton) => (
           <Link
             key={navButton.name}
@@ -45,7 +45,7 @@ const Navbar = (): React.JSX.Element => {
           </Link>
         ))}
       </span>
-      <span className="fixed right-0 z-50 md:hidden">
+      <span className="fixed right-0 z-50 lg:hidden">
         <BurgerMenu />
       </span>
     </div>
