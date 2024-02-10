@@ -15,9 +15,7 @@ import Input from '../../components/inputs/Input/Input.tsx';
 import TextAreaInput from '../../components/inputs/TextAreaInput/TextAreaInput.tsx';
 
 //TODO: create custom hook with useDispatch for input data merged with isValid and functions (are all valid, reset, handle change, handle is valid)
-// add loading animation and disable button (should be automatically disabled after reseting fields)
 // check error for onShow non-serializable
-// add debounce for appearance of error input message,
 // add loading screen for sending mail, add captcha after pressing send, add tests for input, refactor,
 const Contact = (): React.JSX.Element => {
   const dispatch = useAppDispatch();

@@ -32,7 +32,7 @@ const NotificationBanner = (): React.JSX.Element => {
 
   return (
     <Transition
-      className={'absolute -bottom-[30px] left-0 right-0 ml-auto mr-auto w-[32rem] max-w-full'}
+      className={'absolute bottom-0 left-0 right-0 ml-auto mr-auto w-[32rem] max-w-full'}
       show={isVisible}
       enter="transition-all ease-in-out duration-1000"
       enterFrom="opacity-0 translate-y-8"
